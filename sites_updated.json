@@ -1,0 +1,120 @@
+{
+  "Australia News Corp (when blocked disable Googlebot in BPC-settings)": {
+    "domain": "###_au_news_corp",
+    "group": [
+      "adelaidenow.com.au",
+      "cairnspost.com.au",
+      "codesports.com.au",
+      "couriermail.com.au",
+      "dailytelegraph.com.au",
+      "geelongadvertiser.com.au",
+      "goldcoastbulletin.com.au",
+      "heraldsun.com.au",
+      "ntnews.com.au",
+      "theaustralian.com.au",
+      "thechronicle.com.au",
+      "themercury.com.au",
+      "townsvillebulletin.com.au",
+      "weeklytimesnow.com.au"
+    ],
+    "allow_cookies": 1,
+    "block_regex": "cdn\\.ampproject\\.org\\/v\\d\\/amp-subscriptions-.+\\.js",
+    "exception": [{
+        "domain": "codesports.com.au",
+        "allow_cookies": 1,
+        "block_js_inline": "\\.codesports\\.com\\.au\\/.+\\/news-story\\/",
+        "block_regex": "cdn\\.ampproject\\.org\\/v\\d\\/amp-subscriptions-.+\\.js"
+      }
+    ],
+    "upd_version": "3.3.8.3"
+  },
+  "Bloomberg": {
+    "domain": "bloomberg.com",
+    "allow_cookies": 1,
+    "block_regex": "(\\.cm\\.bloomberg\\.com\\/|assets\\.bwbx\\.io\\/s\\d\\/javelin\\/.+\\/transporter\\/)",
+    "upd_version": "3.2.7.1"
+  },
+  "Business Post.ie": {
+    "domain": "businesspost.ie",
+    "allow_cookies": 1,
+    "block_regex": "\\.businesspost\\.ie\\/api\\/tinypass\\.min\\.js",
+    "cs_dompurify": 1,
+    "upd_version": "3.3.7.3"
+  },
+  "O Estado de S. Paulo": {
+    "domain": "estadao.com.br",
+    "allow_cookies": 1,
+    "block_regex": "(\\.estadao\\.com\\.br\\/(paywall\\/|access\\.js)|cdn\\.ampproject\\.org\\/v\\d\\/amp-(access|subscriptions)-.+\\.js)",
+    "upd_version": "3.3.7.4"
+  },
+  "Harvard Business Review": {
+    "domain": "hbr.org",
+    "block_regex": "cdn\\.cxense\\.com\\/",
+    "remove_cookies_select_drop": ["xbc"],
+    "upd_version": "3.3.9.1"
+  },
+  "Le Journal de Montréal": {
+    "domain": "journaldemontreal.com",
+    "allow_cookies": 1,
+    "block_js_inline": "\\.journalde.+\\.com\\/",
+    "upd_version": "3.3.8.5"
+  },
+  "Le Journal de Québec": {
+    "domain": "journaldequebec.com",
+    "allow_cookies": 1,
+    "block_js_inline": "\\.journalde.+\\.com\\/",
+    "upd_version": "3.3.8.5"
+  },
+  "Le Point": {
+    "domain": "lepoint.fr",
+    "allow_cookies": 1,
+    "block_regex": "\\.poool\\.fr",
+    "ld_google_webcache": "aside.paywall|div#contenu",
+    "upd_version": "3.3.7.8"
+  },
+  "Mitteldeutsche Zeitung": {
+    "domain": "mz.de",
+    "allow_cookies": 1,
+    "ld_google_webcache": "div.fp-paywall|div[data-t-name='Article']",
+    "upd_version": "3.3.7.5"
+  },
+  "NyTeknik": {
+    "domain": "nyteknik.se",
+    "allow_cookies": 1,
+    "useragent": "googlebot",
+    "upd_version": "3.3.7.2"
+  },
+  "The Baffler": {
+    "domain": "thebaffler.com",
+    "allow_cookies": 1,
+    "block_regex": "\\/blink\\.net\\/.+\\/blink-sdk\\.js",
+    "upd_version": "3.3.8.3"
+  },
+  "The Economist": {
+    "domain": "economist.com",
+    "allow_cookies": 1,
+    "block_regex": "\\.tinypass\\.com",
+    "cs_code": "[{\"cond\":\"div.paywall\", \"rm_elem\": 1, \"elems\":[{\"cond\":\"svelte-scroller-outer\", \"rm_elem\": 1}, {\"cond\":\"body > style\", \"rm_elem\": 1}]}]",
+    "upd_version": "3.2.7.6"
+  },
+  "The New York Times": {
+    "domain": "nytimes.com",
+    "allow_cookies": 1,
+    "block_regex": "(\\.nytimes\\.com\\/meter\\.js|mwcm\\.nyt\\.com\\/.+\\.js|cooking\\.nytimes\\.com\\/api\\/.+\\/access)",
+    "useragent": "googlebot",
+    "upd_version": "3.1.4.0"
+  },
+  "UnHerd": {
+    "domain": "unherd.com",
+    "allow_cookies": 1,
+    "block_regex": "\\.piano\\.io",
+    "cs_code": "[{\"cond\":\"div#premiumpreview\", \"rm_elem\":1, \"elems\":[{\"cond\":\"div#premiumcontent\", \"rm_attrib\":\"id\"}]}]",
+    "upd_version": "3.3.7.6"
+  },
+  "Volksstimme": {
+    "domain": "volksstimme.de",
+    "allow_cookies": 1,
+    "ld_google_webcache": "div.fp-paywall|div[data-t-name='Article']",
+    "upd_version": "3.3.7.5"
+  }
+}

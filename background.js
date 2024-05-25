@@ -16,36 +16,44 @@ var dompurify_sites = [];
 var optin_setcookie = false;
 var optin_update = true;
 var blocked_referer = false;
+var domain;
 
 // defaultSites are loaded from sites.js at installation extension
 
 var restrictions = {
-  'bhaskar.com': /^((?!bhaskar\.com\/(.+\/)?video(s(\/)?$|\/)).)*$/,
   'bloomberg.com': /^((?!\.bloomberg\.com\/news\/terminal\/).)*$/,
   'bloombergadria.com': /^((?!\.bloombergadria\.com\/video\/).)*$/,
   'dailywire.com': /^((?!\.dailywire\.com\/(episode|show|videos|watch)).)*$/,
   'economictimes.com': /\.economictimes\.com($|\/($|(__assets|prime)(\/.+)?|.+\.cms))/,
-  'elespanol.com': /^((?!\/cronicaglobal\.elespanol\.com\/).)*$/,
   'espn.com': /^((?!espn\.com\/watch).)*$/,
   'esquire.com': /^((?!\/classic\.esquire\.com\/).)*$/,
+  'expresso.pt': /^((?!\/tribuna\.expresso\.pt\/).)*$/,
   'foreignaffairs.com': /^((?!\/reader\.foreignaffairs\.com\/).)*$/,
   'ft.com': /^((?!\/cn\.ft\.com\/).)*$/,
-  'hilltimes.com': /^((?!hilltimes\.com\/slideshow\/).)*$/,
-  'nytimes.com': /^((?!\/(myaccount|timesmachine)\.nytimes\.com\/).)*$/,
-  'science.org': /^((?!\.science\.org\/doi\/).)*$/,
-  'timesofindia.com': /\.timesofindia\.com($|\/($|toi-plus(\/.+)?|.+\.cms))/,
+  'hilltimes.com': /^((?!\.hilltimes\.com\/slideshow\/).)*$/,
+  'hindustantimes.com': /^((?!\/epaper\.hindustantimes\.com\/).)*$/,
+  'ilsole24ore.com': /^((?!\/ntplus.+\.ilsole24ore\.com\/).)*$/,
+  'livemint.com': /^((?!\/epaper\.livemint\.com\/).)*$/,
+  'lopinion.fr': /^((?!\.lopinion\.fr\/lejournal).)*$/,
+  'mid-day.com': /^((?!\/epaper\.mid-day\.com\/).)*$/,
+  'nytimes.com': /^((?!\/(help|myaccount|timesmachine)\.nytimes\.com\/).)*$/,
+  'nzz.ch': /^((?!\/epaper\.nzz\.ch\/).)*$/,
   'quora.com': /^((?!quora\.com\/search\?q=).)*$/,
-  'seekingalpha.com': /\/seekingalpha\.com($|\/($|(amp\/)?(article|news)\/|samw\/))/,
+  'science.org': /^((?!\.science\.org\/doi\/).)*$/,
   'statista.com': /^((?!\.statista\.com\/study\/).)*$/,
+  'study.com': /\/study\.com\/.+\/lesson\//,
+  'tagesspiegel.de': /^((?!\/(background|checkpoint)\.tagesspiegel\.de\/).)*$/,
   'techinasia.com': /\.techinasia\.com\/.+/,
-  'theatlantic.com': /^((?!\/newsletters\.theatlantic\.com\/).)*$/,
   'thetimes.co.uk': /^((?!epaper\.thetimes\.co\.uk).)*$/,
-  'timeshighereducation.com': /\.timeshighereducation\.com\/((features|news|people)\/|.+((\w)+(\-)+){3,}.+|sites\/default\/files\/)/,
+  'timeshighereducation.com': /\.timeshighereducation\.com\/((books|features|news|people)\/|.+((\w)+(\-)+){3,}.+|sites\/default\/files\/)/,
   'uol.com.br': /^((?!(conta|email|piaui\.folha)\.uol\.com\.br).)*$/,
 }
 
 for (let domain of au_news_corp_domains)
   restrictions[domain] = new RegExp('^((?!todayspaper\\.' + domain.replace(/\./g, '\\.') + '\\/).)*$');
+for (let domain of ch_media_domains)
+  restrictions[domain] = new RegExp('^((?!epaper\\.' + domain.replace(/\./g, '\\.') + '\\/).)*$');
+
 if (typeof browser !== 'object') {
   for (let domain of [])
     restrictions[domain] = new RegExp('((\\/|\\.)' + domain.replace(/\./g, '\\.') + '\\/$|' + restrictions[domain].toString().replace(/(^\/|\/$)/g, '') + ')');
@@ -58,9 +66,9 @@ var remove_cookies = [];
 var remove_cookies_select_hold, remove_cookies_select_drop;
 
 // Set User-Agent
-var use_google_bot, use_bing_bot, use_facebook_bot;
+var use_google_bot, use_bing_bot, use_facebook_bot, use_useragent_custom, use_useragent_custom_obj;
 // Set Referer
-var use_facebook_referer, use_google_referer, use_twitter_referer;
+var use_facebook_referer, use_google_referer, use_twitter_referer, use_referer_custom, use_referer_custom_obj;
 // Set random IP-address
 var random_ip = {};
 var use_random_ip = [];
@@ -80,6 +88,8 @@ var amp_unhide;
 var amp_redirect;
 // block contentScript
 var cs_block;
+// clear localStorage in contentScript
+var cs_clear_lclstrg;
 // code for contentScript
 var cs_code;
 // load text from json (script[type="application/ld+json"])
@@ -88,6 +98,8 @@ var ld_json;
 var ld_json_next;
 // load text from json (link[rel="alternate"][type="application/json"][href])
 var ld_json_url;
+// load text from archive.is
+var ld_archive_is;
 // load text from Google webcache
 var ld_google_webcache;
 // add external link to article
@@ -105,18 +117,24 @@ function initSetRules() {
   use_google_bot = [];
   use_bing_bot = [];
   use_facebook_bot = [];
+  use_useragent_custom = [];
+  use_useragent_custom_obj = {};
   use_facebook_referer = [];
   use_google_referer = [];
   use_twitter_referer = [];
+  use_referer_custom = [];
+  use_referer_custom_obj = {};
   random_ip = {};
   change_headers = [];
   amp_unhide = [];
   amp_redirect = {};
   cs_block = {};
+  cs_clear_lclstrg = [];
   cs_code = {};
   ld_json = {};
   ld_json_next = {};
   ld_json_url = {};
+  ld_archive_is = {};
   ld_google_webcache = {};
   add_ext_link = {};
   block_js_custom = [];
@@ -160,8 +178,7 @@ function setDefaultOptions() {
   });
 }
 
-function check_sites_updated() {
-  let sites_updated_json = 'https://gitlab.com/magnolia1234/bypass-paywalls-' + url_loc + '-clean/-/raw/master/sites_updated.json';
+function check_sites_updated(sites_updated_json, optin_update = false) {
   fetch(sites_updated_json)
   .then(response => {
     if (response.ok) {
@@ -174,12 +191,22 @@ function check_sites_updated() {
         ext_api.storage.local.set({
           sites_updated: json
         });
+        if (!optin_update) {
+          let updated_ext_version_new = Object.values(json).map(x => x.upd_version || '').sort().pop();
+          if (updated_ext_version_new)
+            setExtVersionNew(updated_ext_version_new);
+        }
       })
     }
   }).catch(function (err) {
     false;
   });
 }
+
+var ext_path = 'https://gitflic.ru/project/magnolia1234/bpc_updates/blob/raw?file=';
+var sites_updated_json = 'sites_updated.json';
+var sites_updated_json_online = ext_path + sites_updated_json;
+var self_hosted = !!(manifestData.update_url || (manifestData.browser_specific_settings && manifestData.browser_specific_settings.gecko.update_url));
 
 function clear_sites_updated() {
   ext_api.storage.local.set({
@@ -194,6 +221,8 @@ function prep_regex_str(str, domain = '') {
 }
 
 function addRules(domain, rule) {
+  if (rule.remove_cookies > 0 || rule.hasOwnProperty('remove_cookies_select_hold') || !(rule.hasOwnProperty('allow_cookies') || rule.hasOwnProperty('remove_cookies_select_drop')) || rule.cs_clear_lclstrg)
+    cs_clear_lclstrg.push(domain);
   if (rule.hasOwnProperty('remove_cookies_select_drop') || rule.hasOwnProperty('remove_cookies_select_hold')) {
     rule.allow_cookies = 1;
     rule.remove_cookies = 1;
@@ -255,6 +284,11 @@ function addRules(domain, rule) {
         use_facebook_bot.push(domain);
       break;
     }
+  } else if (rule.useragent_custom) {
+    if (!use_useragent_custom.includes(domain)) {
+      use_useragent_custom.push(domain);
+      use_useragent_custom_obj[domain] = rule.useragent_custom;
+    }
   }
   if (rule.referer) {
     switch (rule.referer) {
@@ -270,6 +304,11 @@ function addRules(domain, rule) {
       if (!use_twitter_referer.includes(domain))
         use_twitter_referer.push(domain);
       break;
+    }
+  } else if (rule.referer_custom) {
+    if (!use_referer_custom.includes(domain)) {
+      use_referer_custom.push(domain);
+      use_referer_custom_obj[domain] = rule.referer_custom;
     }
   }
   if (rule.random_ip) {
@@ -298,20 +337,20 @@ function addRules(domain, rule) {
     ld_json_next[domain] = rule.ld_json_next;
   if (rule.ld_json_url)
     ld_json_url[domain] = rule.ld_json_url;
+  if (rule.ld_archive_is)
+    ld_archive_is[domain] = rule.ld_archive_is;
   if (rule.ld_google_webcache)
     ld_google_webcache[domain] = rule.ld_google_webcache;
-  if (rule.ld_json || rule.ld_json_next || rule.ld_json_url || rule.ld_google_webcache || rule.cs_dompurify)
+  if (rule.ld_json || rule.ld_json_next || rule.ld_json_url || rule.ld_archive_is || rule.ld_google_webcache || rule.cs_dompurify)
     if (!dompurify_sites.includes(domain))
       dompurify_sites.push(domain);
   if (rule.add_ext_link && rule.add_ext_link_type)
     add_ext_link[domain] = {css: rule.add_ext_link, type: rule.add_ext_link_type};
 
   // custom
-  if (rule.googlebot > 0)
-    use_google_bot.push(domain); // legacy
-  if (rule.block_js > 0 || rule.block_javascript > 0)
+  if (rule.block_js > 0)
     block_js_custom.push(domain);
-  if (rule.block_js_ext > 0 || rule.block_javascript_ext > 0)
+  if (rule.block_js_ext > 0)
     block_js_custom_ext.push(domain);
 }
 
@@ -323,7 +362,7 @@ function customFlexAddRules(custom_domain, rule) {
     blockedJsInlineDomains.push(custom_domain);
     disableJavascriptInline();
   }
-  if (rule.useragent || rule.referer || rule.random_ip)
+  if (rule.useragent || rule.useragent_custom || rule.referer || rule.referer_custom || rule.random_ip)
     change_headers.push(custom_domain);
   if (rule.random_ip)
     use_random_ip.push(custom_domain);
@@ -341,8 +380,13 @@ function set_rules(sites, sites_updated, sites_custom) {
       if (site_default) {
         rule = defaultSites[site_default];
         let site_updated = Object.keys(sites_updated).find(updated_key => compareKey(updated_key, site));
-        if (site_updated)
+        if (site_updated) {
           rule = sites_updated[site_updated];
+          if (rule.nofix) {
+            enabledSites.splice(enabledSites.indexOf(site_domain), 1);
+            nofix_sites.push(site_domain);
+          }
+        }
       } else if (sites_updated.hasOwnProperty(site)) { // updated (new) sites
         rule = sites_updated[site];
       } else if (sites_custom.hasOwnProperty(site)) { // custom (new) sites
@@ -353,7 +397,7 @@ function set_rules(sites, sites_updated, sites_custom) {
       let domains = [site_domain];
       let group = false;
       if (rule.hasOwnProperty('group')) {
-        domains = rule.group;
+        domains = (typeof rule.group !== 'string') ? rule.group : rule.group.split(',');
         group = true;
       }
       let rule_default = {};
@@ -382,7 +426,7 @@ function set_rules(sites, sites_updated, sites_custom) {
             rule = {};
             for (let key in sites_custom[customSite_title])
               rule[key] = sites_custom[customSite_title][key];
-            if (block_regex_default) {
+            if (block_regex_default && !rule.block_regex_ignore_default) {
               if (rule.hasOwnProperty('block_regex')) {
                 if (block_regex_default instanceof RegExp)
                   block_regex_default = block_regex_default.source;
@@ -404,7 +448,7 @@ function set_rules(sites, sites_updated, sites_custom) {
   blockedJsInlineDomains = Object.keys(blockedJsInline);
   disableJavascriptInline();
   use_random_ip = Object.keys(random_ip);
-  change_headers = use_google_bot.concat(use_bing_bot, use_facebook_bot, use_facebook_referer, use_google_referer, use_twitter_referer, use_random_ip);
+  change_headers = use_google_bot.concat(use_bing_bot, use_facebook_bot, use_useragent_custom, use_facebook_referer, use_google_referer, use_twitter_referer, use_referer_custom, use_random_ip);
 }
 
 // add grouped sites to en/disabledSites (and exclude sites)
@@ -414,11 +458,22 @@ function add_grouped_enabled_domains(groups) {
       enabledSites = enabledSites.concat(groups[key]);
     else
       disabledSites = disabledSites.concat(groups[key]);
-    for (let site of excludedSites) {
-      if (enabledSites.includes(site)) {
-        enabledSites.splice(enabledSites.indexOf(site), 1);
-        disabledSites.push(site);
-      }
+  }
+  // custom
+  for (let site in customSites) {
+    let group = customSites[site].group;
+    if (group) {
+      let group_array = group.split(',');
+      if (enabledSites.includes(customSites[site].domain))
+        enabledSites = enabledSites.concat(group_array);
+      else
+        disabledSites = disabledSites.concat(group_array);
+    }
+  }
+  for (let site of excludedSites) {
+    if (enabledSites.includes(site)) {
+      enabledSites.splice(enabledSites.indexOf(site), 1);
+      disabledSites.push(site);
     }
   }
 }
@@ -441,7 +496,7 @@ ext_api.storage.local.get({
   customSites = filterObject(customSites, function (val, key) {
     return !(val.add_ext_link && !val.add_ext_link_type)
   });
-  customSites_domains = Object.values(customSites).map(x => x.domain);
+  customSites_domains = Object.values(customSites).map(x => x.group ? x.group.split(',').map(x => x.trim()).concat([x.domain]) : x.domain).flat();
   updatedSites = items.sites_updated;
   updatedSites_domains_new = Object.values(updatedSites).filter(x => x.domain && !defaultSites_domains.includes(x.domain) || x.group).map(x => x.group ? x.group.filter(y => !defaultSites_domains.includes(y)).concat([x.domain]) : x.domain).flat();
   var ext_version_old = items.ext_version_old;
@@ -469,7 +524,7 @@ ext_api.storage.local.get({
         sites[site_new] = defaultSites[site_new].domain;
       // reset ungrouped sites
       let ungrouped_sites = {
-        'The Athletic': 'theathletic.com',
+        'The Stage Media (UK)': '###_uk_thestage_media',
         'The Week (regwall)': 'theweek.com'
       };
       for (let key in ungrouped_sites) {
@@ -482,9 +537,8 @@ ext_api.storage.local.get({
     } else {
       ext_api.management.getSelf(function (result) {
         if ((result.installType === 'development' || (result.installType !== 'development' && !enabledSites.includes('#options_on_update')))) {
-          let new_groups = ['###_au_nine_ent', '###_uk_delinian'];
-          let open_options = new_groups.some(group => !enabledSites.includes(group) && grouped_sites[group].some(domain => enabledSites.includes(domain) && !customSites_domains.includes(domain))) ||
-            (!enabledSites.includes('###_usa_craincomm') && enabledSites.includes('###_usa_genomeweb'));
+          let new_groups = ['###_au_private_media', '###_ch_ringier', '###_fr_groupe_infopro', '###_pl_ringier', '###_usa_digiday'];
+          let open_options = new_groups.some(group => !enabledSites.includes(group) && grouped_sites[group].some(domain => enabledSites.includes(domain) && !customSites_domains.includes(domain)));
           if (open_options)
             ext_api.runtime.openOptionsPage();
         }
@@ -497,16 +551,17 @@ ext_api.storage.local.get({
     });
   }
 
-  disabledSites = defaultSites_grouped_domains.concat(customSites_domains).filter(x => !enabledSites.includes(x));
+  disabledSites = defaultSites_grouped_domains.concat(customSites_domains, updatedSites_domains_new).filter(x => !enabledSites.includes(x));
   add_grouped_enabled_domains(grouped_sites);
   set_rules(sites, updatedSites, customSites);
-  if (enabledSites.includes('#options_optin_update_rules')) {
-    check_sites_updated();
-    sites_custom_ext_json = 'https://gitlab.com/magnolia1234/bypass-paywalls-' + url_loc + '-clean/-/raw/master/custom/sites_custom.json';
-  } 
-  check_sites_custom_ext();
   if (optin_update)
     check_update();
+  if (enabledSites.includes('#options_optin_update_rules') && self_hosted) {
+    sites_updated_json = sites_updated_json_online;
+    sites_custom_ext_json = ext_path + 'sites_custom.json';
+  }
+  check_sites_updated(sites_updated_json, optin_update);
+  check_sites_custom_ext();
   if (!Object.keys(sites).length)
     ext_api.runtime.openOptionsPage();
 });
@@ -525,7 +580,7 @@ ext_api.storage.onChanged.addListener(function (changes, namespace) {
       }).map(function (val) {
         return val.toLowerCase();
       });
-      disabledSites = defaultSites_grouped_domains.concat(customSites_domains).filter(x => !enabledSites.includes(x));
+      disabledSites = defaultSites_grouped_domains.concat(customSites_domains, updatedSites_domains_new).filter(x => !enabledSites.includes(x));
       add_grouped_enabled_domains(grouped_sites);
       set_rules(sites, updatedSites, customSites);
     }
@@ -533,7 +588,7 @@ ext_api.storage.onChanged.addListener(function (changes, namespace) {
       var sites_custom = storageChange.newValue ? storageChange.newValue : {};
       var sites_custom_old = storageChange.oldValue ? storageChange.oldValue : {};
       customSites = sites_custom;
-      customSites_domains = Object.values(sites_custom).map(x => x.domain);
+      customSites_domains = Object.values(sites_custom).map(x => x.group ? x.group.split(',').map(x => x.trim()).concat([x.domain]) : x.domain).flat();
       
       // add/remove custom sites in options (not for default site(group))
       var sites_custom_added = Object.keys(sites_custom).filter(x => !Object.keys(sites_custom_old).includes(x) && !defaultSites.hasOwnProperty(x) && !defaultSites_domains.includes(sites_custom[x].domain));
@@ -648,26 +703,7 @@ ext_api.webRequest.onBeforeRequest.addListener(function (details) {
 ["blocking"]
 );
 
-// m.faz.net set user-agent to mobile
 const userAgentMobile = "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.5790.171 Mobile Safari/537.36";
-ext_api.webRequest.onBeforeSendHeaders.addListener(function (details) {
-  if (!isSiteEnabled(details)) {
-    return;
-  }
-  let headers = details.requestHeaders;
-  headers = headers.map(function (header) {
-    if (header.name.toLowerCase() === 'user-agent')
-      header.value = userAgentMobile;
-    return header;
-  });
-  return {
-    requestHeaders: headers
-  };
-}, {
-  urls: ["*://m.faz.net/*"],
-  types: ["xmlhttprequest"]
-},
-  ["blocking", "requestHeaders"]);
 
 // webcache.googleusercontent.com set user-agent to Chrome (on Firefox for Android)
 if ((typeof browser === 'object') && navigator_ua_mobile) {
@@ -688,44 +724,8 @@ if ((typeof browser === 'object') && navigator_ua_mobile) {
     ["blocking", "requestHeaders"]);
 }
 
-// economictimes redirect
-ext_api.webRequest.onBeforeRequest.addListener(function (details) {
-  if (!isSiteEnabled(details) || details.url.includes('.com/epaper/') || !navigator_ua_mobile) {
-    return;
-  }
-  var updatedUrl = details.url.split('?')[0].replace('economictimes.indiatimes.com', 'm.economictimes.com');
-  return { redirectUrl: updatedUrl };
-},
-{urls:["*://economictimes.indiatimes.com/*?from=mdr"], types:["main_frame"]},
-["blocking"]
-);
-
-// infzm.com redirect to wap (mobile)
-ext_api.webRequest.onBeforeRequest.addListener(function (details) {
-  if (!isSiteEnabled(details)) {
-    return;
-  }
-  var updatedUrl = details.url.replace('.com/contents/', '.com/wap/#/content/');
-  return { redirectUrl: updatedUrl };
-},
-{urls:["*://www.infzm.com/contents/*"], types:["main_frame"]},
-["blocking"]
-);
-
-// telegraaf.nl redirect error-page
-ext_api.webRequest.onBeforeRequest.addListener(function (details) {
-  if (!isSiteEnabled(details)) {
-    return;
-  }
-  let updatedUrl = details.url.split('&')[0].replace('error?ref=/', '');;
-  return { redirectUrl: updatedUrl };
-},
-{urls:["*://www.telegraaf.nl/error?ref=/*"], types:["main_frame"]},
-["blocking"]
-);
-
 // Australia News Corp redirect subscribe to amp
-var au_news_corp_no_amp_fix = ['codesports.com.au'];
+var au_news_corp_no_amp_fix = ['ntnews.com.au'];
 var au_news_corp_subscr = au_news_corp_domains.filter(domain => !au_news_corp_no_amp_fix.includes(domain)).map(domain => '*://www.' + domain + '/subscribe/*');
 ext_api.webRequest.onBeforeRequest.addListener(function (details) {
   if (!isSiteEnabled(details) || details.url.includes('/digitalprinteditions') || !(details.url.includes('dest=') && details.url.split('dest=')[1].split('&')[0])) {
@@ -816,6 +816,9 @@ if (typeof browser !== 'object') {
     if (amp_redirect_domain)
       bg2csData.amp_redirect = amp_redirect[amp_redirect_domain];
     let cs_block_domain = matchUrlDomain(Object.keys(cs_block), url);
+    let cs_clear_lclstrg_domain = matchUrlDomain(cs_clear_lclstrg, url);
+    if (cs_clear_lclstrg_domain)
+      bg2csData.cs_clear_lclstrg = 1;
     let cs_code_domain = matchUrlDomain(Object.keys(cs_code), url);
     if (cs_code_domain)
       bg2csData.cs_code = cs_code[cs_code_domain];
@@ -828,6 +831,9 @@ if (typeof browser !== 'object') {
     let ld_json_url_domain = matchUrlDomain(Object.keys(ld_json_url), url);
     if (ld_json_url_domain)
       bg2csData.ld_json_url = ld_json_url[ld_json_url_domain];
+    let ld_archive_is_domain = matchUrlDomain(Object.keys(ld_archive_is), url);
+    if (ld_archive_is_domain)
+      bg2csData.ld_archive_is = ld_archive_is[ld_archive_is_domain];
     let ld_google_webcache_domain = matchUrlDomain(Object.keys(ld_google_webcache), url);
     if (ld_google_webcache_domain)
       bg2csData.ld_google_webcache = ld_google_webcache[ld_google_webcache_domain];
@@ -857,12 +863,16 @@ if (typeof browser !== 'object') {
         // send bg2csData to contentScript.js
         if (Object.keys(bg2csData).length) {
           setTimeout(function () {
-            ext_api.tabs.sendMessage(tabId, {msg: "bg2cs", data: bg2csData});
+            try {
+              ext_api.tabs.sendMessage(tabId, {msg: "bg2cs", data: bg2csData});
+            } catch (err) {
+              false;
+            }
           }, 500);
         }
         } // !cs_block_domain
         // remove cookies after page load
-        if (rc_domain_enabled) {
+        if (rc_domain_enabled && !['enotes.com', 'huffingtonpost.it', 'lastampa.it'].includes(rc_domain)) {
           remove_cookies_fn(rc_domain, true);
         }
       }, n * 200);
@@ -896,7 +906,7 @@ if (typeof browser !== 'object') {
     }
   }
 
-  var set_var_sites =  ['journaldemontreal.com', 'journaldequebec.com', 'nzherald.co.nz', 'theglobeandmail.com'].concat(de_madsack_domains);
+  var set_var_sites =  ['dagsavisen.no', 'journaldemontreal.com', 'journaldequebec.com', 'nzherald.co.nz'].concat(de_madsack_domains);
   function runOnTab_once_var(tab) {
     let tabId = tab.id;
     let url = tab.url;
@@ -929,14 +939,6 @@ ext_api.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     runOnTab_once_var(tab);
   }
 });
-
-setInterval(function () {
-  let current_date_str = currentDateStr();
-  if (last_date_str < current_date_str) {
-    bpc_count_daily_users(current_date_str);
-    last_date_str = current_date_str;
-  }
-}, 60 * 60 * 1000);
 
 var extraInfoSpec = ['blocking', 'requestHeaders'];
 if (ext_api.webRequest.OnBeforeSendHeadersOptions.hasOwnProperty('EXTRA_HEADERS'))
@@ -994,7 +996,7 @@ ext_api.webRequest.onBeforeSendHeaders.addListener(function(details) {
 
   // block javascript of (sub)domain for custom sites (optional)
   var domain_blockjs = matchUrlDomain(block_js_custom, details.url);
-  if (domain_blockjs && matchUrlDomain(domain_blockjs, details.url) && details.type === 'script') {
+  if (domain_blockjs && details.type === 'script') {
     return { cancel: true };
   }
 
@@ -1009,13 +1011,13 @@ if (matchUrlDomain(change_headers, details.url) && !ignore_types.includes(detail
   var mobile = details.requestHeaders.filter(x => x.name.toLowerCase() === "user-agent" && x.value.toLowerCase().includes("mobile")).length;
   var googlebotEnabled = matchUrlDomain(use_google_bot, details.url) && 
     !(matchUrlDomain(es_grupo_vocento_domains, details.url) && mobile) &&
-    !(matchUrlDomain('barrons.com', details.url) && enabledSites.includes('#options_disable_gb_barrons')) &&
     !(matchUrlDomain(['economictimes.com', 'economictimes.indiatimes.com'], details.url) && !details.url.split(/\?|#/)[0].endsWith('.cms')) &&
-    !(matchUrlDomain(au_news_corp_domains, details.url) && (details.url.includes('?amp') || !mobile || (!matchUrlDomain(au_news_corp_no_amp_fix, details.url) && enabledSites.includes('#options_disable_gb_au_news_corp')))) &&
-    !(matchUrlDomain('uol.com.br', details.url) && !matchUrlDomain('folha.uol.com.br', details.url)) &&
-    !(matchUrlDomain('wsj.com', details.url) && !details.url.match(/((\w)+[%\-]+){3,}/) && details.type === 'main_frame' && mobile);
+    !(matchUrlDomain(au_news_corp_domains, details.url) && (details.url.includes('?amp') || (!matchUrlDomain(au_news_corp_no_amp_fix, details.url) && enabledSites.includes('#options_disable_gb_au_news_corp')))) &&
+    !(matchUrlDomain('nytimes.com', details.url) && details.url.includes('.nytimes.com/live/')) &&
+    !(matchUrlDomain('uol.com.br', details.url) && !matchUrlDomain('folha.uol.com.br', details.url));
   var bingbotEnabled = matchUrlDomain(use_bing_bot, details.url);
   var facebookbotEnabled = matchUrlDomain(use_facebook_bot, details.url);
+  var useragent_customEnabled = matchUrlDomain(use_useragent_custom, details.url);
 
   // if referer exists, set it
   requestHeaders = requestHeaders.map(function (requestHeader) {
@@ -1026,11 +1028,13 @@ if (matchUrlDomain(change_headers, details.url) && !ignore_types.includes(detail
         requestHeader.value = 'https://www.facebook.com/';
       } else if (matchUrlDomain(use_twitter_referer, details.url)) {
         requestHeader.value = 'https://t.co/';
+      } else if (domain = matchUrlDomain(use_referer_custom, details.url)) {
+        requestHeader.value = use_referer_custom_obj[domain];
       }
       setReferer = true;
     }
     if (requestHeader.name === 'User-Agent') {
-      useUserAgentMobile = requestHeader.value.toLowerCase().includes("mobile") && !matchUrlDomain(['telerama.fr'], details.url);
+      useUserAgentMobile = (requestHeader.value.toLowerCase().includes("mobile") || matchUrlDomain(au_news_corp_domains, details.url)) && !matchUrlDomain(['telerama.fr', 'theatlantic.com'], details.url);
     }
     return requestHeader;
   });
@@ -1052,6 +1056,11 @@ if (matchUrlDomain(change_headers, details.url) && !ignore_types.includes(detail
         name: 'Referer',
         value: 'https://t.co/'
       });
+    } else if (domain = matchUrlDomain(use_referer_custom, details.url)) {
+      requestHeaders.push({
+        name: 'Referer',
+        value: use_referer_custom_obj[domain]
+      });
     }
   }
 
@@ -1068,7 +1077,7 @@ if (matchUrlDomain(change_headers, details.url) && !ignore_types.includes(detail
   }
 
   // override User-Agent to use Bingbot
-  if (bingbotEnabled) {
+  else if (bingbotEnabled) {
     requestHeaders.push({
       "name": "User-Agent",
       "value": useUserAgentMobile ? userAgentMobileB : userAgentDesktopB
@@ -1076,16 +1085,24 @@ if (matchUrlDomain(change_headers, details.url) && !ignore_types.includes(detail
   }
 
   // override User-Agent to use Facebookbot
-  if (facebookbotEnabled) {
+  else if (facebookbotEnabled) {
     requestHeaders.push({
       "name": "User-Agent",
       "value": userAgentDesktopF
     })
   }
 
+  // override User-Agent to custom
+  else if (domain = useragent_customEnabled) {
+    requestHeaders.push({
+      "name": "User-Agent",
+      "value": use_useragent_custom_obj[domain]
+    })
+  }
+
   // random IP for sites in use_random_ip
-  let domain_random;
-  if (domain_random = matchUrlDomain(use_random_ip, details.url)) {
+  let domain_random = matchUrlDomain(use_random_ip, details.url);
+  if (domain_random && !googlebotEnabled) {
     let randomIP_val;
     if (random_ip[domain_random] === 'eu')
       randomIP_val = randomIP(185, 185);
@@ -1189,7 +1206,7 @@ function updateBadge(activeTab) {
     }
     if (matchUrlDomain('webcache.googleusercontent.com', currentUrl))
       badgeText = '';
-    if (ext_version_new)
+    if (ext_version_new > ext_version)
       badgeText = '^' + badgeText;
     let isDefaultSite = matchUrlDomain(defaultSites_domains, currentUrl);
     let isCustomSite = matchUrlDomain(customSites_domains, currentUrl);
@@ -1215,27 +1232,50 @@ function updateBadge(activeTab) {
       ext_api.action.setBadgeText({text: badgeText});
 }
 
+function setExtVersionNew(check_ext_version_new, check_ext_upd_version_new = '') {
+  ext_api.management.getSelf(function (result) {
+    var installType = result.installType;
+    var ext_version_len = (installType === 'development') ? 7 : 5;
+    ext_version_new = check_ext_version_new;
+    if (ext_version_len === 5 && check_ext_upd_version_new && check_ext_upd_version_new < check_ext_version_new)
+      ext_version_new = check_ext_upd_version_new;
+    if (ext_version_new && ext_version_new.substring(0, ext_version_len) <= ext_version.substring(0, ext_version_len))
+      ext_version_new = '1';
+    ext_api.storage.local.set({
+      ext_version_new: ext_version_new
+    });
+  });
+}
+
 var ext_version_new;
 function check_update() {
-  let manifest_new = 'https://gitlab.com/magnolia1234/bypass-paywalls-' + url_loc + '-clean/raw/master/manifest.json';
+  let manifest_new = ext_path + 'manifest.json';
   fetch(manifest_new)
   .then(response => {
     if (response.ok) {
       response.json().then(json => {
-        ext_api.management.getSelf(function (result) {
-          var installType = result.installType;
-          var ext_version_len = (installType === 'development') ? 7 : 5;
-          ext_version_new = json['version'];
-          if (ext_version_new.substring(0, ext_version_len) <= ext_version.substring(0, ext_version_len))
-            ext_version_new = '';
-          ext_api.storage.local.set({
-            ext_version_new: ext_version_new
+        let json_ext_version_new = json['version'];
+        if (manifestData.browser_specific_settings && manifestData.browser_specific_settings.gecko.update_url) {
+          let json_upd_version_new = manifestData.browser_specific_settings.gecko.update_url;
+          fetch(json_upd_version_new)
+          .then(response => {
+            if (response.ok) {
+              response.json().then(upd_json => {
+                let ext_id = manifestData.browser_specific_settings.gecko.id;
+                let json_ext_upd_version_new = upd_json.addons[ext_id].updates[0].version;
+                setExtVersionNew(json_ext_version_new, json_ext_upd_version_new);
+              })
+            }
+          }).catch(function (err) {
+            setExtVersionNew(json_ext_version_new);
           });
-        });
+        } else
+          setExtVersionNew(json_ext_version_new);
       })
-    }
+    } else
+      setExtVersionNew('');
   }).catch(function (err) {
-    false;
+    setExtVersionNew('');
   });
 }
 
@@ -1265,10 +1305,15 @@ function site_switch() {
           isDefaultSite = isUpdatedSite;
       }
       let defaultSite_title = isDefaultSite ? Object.keys(defaultSites).find(key => defaultSites[key].domain === isDefaultSite) : '';
-      let isCustomSite = matchUrlDomain(Object.values(customSites_domains), currentUrl);
-      let customSite_title = isCustomSite ? Object.keys(customSites).find(key => customSites[key].domain === isCustomSite) : '';
-      let site_title = defaultSite_title || customSite_title;
-      let domain = isDefaultSite || isCustomSite;
+      let isCustomSite = matchUrlDomain(customSites_domains, currentUrl);
+      let customSite_title = isCustomSite ? Object.keys(customSites).find(key => customSites[key].domain === isCustomSite || (customSites[key].group && customSites[key].group.split(',').includes(isCustomSite))) : '';
+      if (isCustomSite && customSite_title && customSites[customSite_title].domain !== isCustomSite)
+        isCustomSite = customSites[customSite_title].domain;
+      let isCustomFlexSite = matchUrlDomain(custom_flex_domains, currentUrl);
+      let isCustomFlexGroupSite = isCustomFlexSite ? Object.keys(custom_flex).find(key => custom_flex[key].includes(isCustomFlexSite)) : '';
+      let customFlexSite_title = isCustomFlexGroupSite ? Object.keys(defaultSites).find(key => defaultSites[key].domain === isCustomFlexGroupSite) : '';
+      let site_title = defaultSite_title || customSite_title || customFlexSite_title;
+      let domain = isDefaultSite || isCustomSite || isCustomFlexGroupSite;
       if (domain && site_title) {
         let added_site = [];
         let removed_site = [];
@@ -1311,6 +1356,8 @@ function remove_cookies_fn(domainVar, exclusions = false) {
             storeId = store.id;
         }
         storeId = storeId.toString();
+        if (domainVar === 'asia.nikkei.com')
+          domainVar = 'nikkei.com';
         var cookie_get_options = {
           domain: domainVar
         };
@@ -1377,37 +1424,44 @@ ext_api.runtime.onMessage.addListener(function (message, sender) {
   }
   // clear cookies for domain
   if (message.request === 'clear_cookies_domain' && message.data) {
-    remove_cookies_fn(message.data.domain);
+    remove_cookies_fn(message.data.domain, true);
   }
   if (message.request === 'custom_domain' && message.data && message.data.domain) {
     let custom_domain = message.data.domain;
     let group = message.data.group;
     if (group) {
-      let nofix_groups = ['###_be_mediahuis', '###_ch_tamedia', '###_de_rp_aachen_medien', '###_fi_alma_talent', '###_it_citynews', '###_nl_vmnmedia', '###_substack_custom'];
+      let nofix_groups = ['###_beehiiv', '###_fi_alma_talent', '###_fi_kaleva', '###_ghost', '###_it_citynews', '###_nl_vmnmedia', '###_se_gota_media', '###_substack_custom', '###_uk_delinian', '###_usa_cherryroad'];
       if (!custom_flex_domains.includes(custom_domain)) {
-        if (enabledSites.includes(group)) {
-          let rules = Object.values(defaultSites).filter(x => x.domain === group)[0];
-          if (rules) {
-            if (group === '###_de_madsack') {
-              if (!set_var_sites.includes(custom_domain))
-                set_var_sites.push(custom_domain);
-            } else if (group === '###_usa_townnews') {
-              if (!dompurify_sites.includes(custom_domain))
-                dompurify_sites.push(custom_domain);
-              if (['berkshireeagle.com'].includes(custom_domain))
-                rules.useragent = 'googlebot';
-            }
-          } else
-            rules = Object.values(customSites).filter(x => x.domain === group)[0];
-          if (rules) {
-            custom_flex_domains.push(custom_domain);
+        if (!nofix_groups.includes(group)) {
+          if (custom_flex[group])
+            custom_flex[group].push(custom_domain);
+          else
+            custom_flex[group] = [custom_domain];
+          custom_flex_domains.push(custom_domain);
+          if (enabledSites.includes(group)) {
             if (!enabledSites.includes(custom_domain))
               enabledSites.push(custom_domain);
-            customFlexAddRules(custom_domain, rules);
+            let rules = Object.values(defaultSites).filter(x => x.domain === group)[0];
+            if (rules) {
+              if (rules.hasOwnProperty('exception')) {
+                let exception_rule = rules.exception.filter(x => custom_domain === x.domain || (typeof x.domain !== 'string' && x.domain.includes(custom_domain)));
+                if (exception_rule.length)
+                  rules = exception_rule[0];
+              }
+              if (group === '###_de_madsack') {
+                if (!set_var_sites.includes(custom_domain))
+                  set_var_sites.push(custom_domain);
+              }
+            } else
+              rules = Object.values(customSites).filter(x => x.domain === group)[0];
+            if (rules) {
+              customFlexAddRules(custom_domain, rules);
+            }
+          } else if (disabledSites.includes(group)) {
+            if (!disabledSites.includes(custom_domain))
+              disabledSites.push(custom_domain);
           }
-        } else if (disabledSites.includes(group))
-          custom_flex_not_domains.push(custom_domain);
-        else if (nofix_groups.includes(group))
+        } else
           nofix_sites.push(custom_domain);
     }
   } else
@@ -1417,10 +1471,13 @@ ext_api.runtime.onMessage.addListener(function (message, sender) {
     site_switch();
   }
   if (message.request === 'check_sites_updated') {
-    check_sites_updated();
+    check_sites_updated(sites_updated_json_online);
   }
   if (message.request === 'clear_sites_updated') {
     clear_sites_updated();
+  }
+  if (message.request === 'check_update') {
+    check_update();
   }
   if (message.request === 'popup_show_toggle') {
     ext_api.tabs.query({
@@ -1433,9 +1490,10 @@ ext_api.runtime.onMessage.addListener(function (message, sender) {
         let isExcludedSite = matchUrlDomain(excludedSites, currentUrl);
         if (!isExcludedSite) {
           let isDefaultSite = matchUrlDomain(defaultSites_domains, currentUrl);
-          let isCustomSite = matchUrlDomain(Object.values(customSites_domains), currentUrl);
+          let isCustomSite = matchUrlDomain(customSites_domains, currentUrl);
           let isUpdatedSite = matchUrlDomain(updatedSites_domains_new, currentUrl);
-          domain = isDefaultSite || isCustomSite || isUpdatedSite;
+          let isCustomFlexSite = matchUrlDomain(custom_flex_domains, currentUrl);
+          domain = isDefaultSite || isCustomSite || isUpdatedSite || isCustomFlexSite;
           if (domain)
             ext_api.runtime.sendMessage({
               msg: "popup_show_toggle",
@@ -1452,37 +1510,65 @@ ext_api.runtime.onMessage.addListener(function (message, sender) {
     ext_api.tabs.reload(sender.tab.id, {bypassCache: true});
   }
   if (message.request === 'getExtSrc' && message.data) {
-    fetch(message.data.url)
-    .then(response => {
-      if (response.ok) {
-        response.text().then(html => {
-          if (message.data.base64) {
-            html = decode_utf8(atob(html));
-            message.data.selector_source = 'body';
-          }
-          message.data.html = html;
-          if (typeof DOMParser === 'function') {
-            let parser = new DOMParser();
-            let doc = parser.parseFromString(html, 'text/html');
-            let article_new = doc.querySelector(message.data.selector_source);
-            if (article_new)
-              message.data.html = article_new.outerHTML;
-          }
-          ext_api.tabs.sendMessage(sender.tab.id, {msg: "showExtSrc", data: message.data});
-        });
-      }
-    }).catch(function (err) {
-      message.data.html = '';
-      ext_api.tabs.sendMessage(sender.tab.id, {msg: "showExtSrc", data: message.data});
-    });
+    message.data.html = '';
+    function sendArticleSrc(message) {
+      ext_api.tabs.sendMessage(sender.tab.id, {
+        msg: "showExtSrc",
+        data: message.data
+      });
+    }
+    function getArticleSrc(message) {
+      let url_src = message.data.url_src || message.data.url;
+      fetch(url_src)
+      .then(response => {
+        if (response.ok) {
+          response.text().then(html => {
+            let recursive;
+            if (message.data.url.startsWith('https://archive.')) {
+              if (url_src.includes('/https')) {
+                if (html.includes('<div class="TEXT-BLOCK"')) {
+                  message.data.url_src = html.split('<div class="TEXT-BLOCK"')[1].split('</div>')[0].split('href="')[1].split('"')[0];
+                  getArticleSrc(message);
+                  recursive = true;
+                } else
+                  html = '';
+              }
+            }
+            if (!recursive) {
+              if (html) {
+                if (message.data.base64) {
+                  html = decode_utf8(atob(html));
+                  message.data.selector_source = 'body';
+                }
+                if (typeof DOMParser === 'function') {
+                  let parser = new DOMParser();
+                  let doc = parser.parseFromString(html, 'text/html');
+                  let article_new = doc.querySelector(message.data.selector_source);
+                  if (article_new)
+                    html = article_new.outerHTML;
+                  else
+                    html = '';
+                }
+              }
+              message.data.html = html;
+              sendArticleSrc(message);
+            }
+          });
+        } else
+          sendArticleSrc(message);
+      }).catch(function (err) {
+        sendArticleSrc(message);
+      });
+    }
+    getArticleSrc(message);
   }
   if (message.scheme && (![chrome_scheme, 'undefined'].includes(message.scheme) || focus_changed)) {
-      let icon_path = {path: {'128': 'bypass.png'}};
-      if (message.scheme === 'dark')
-          icon_path = {path: {'128': 'bypass-dark.png'}};
-      ext_api.action.setIcon(icon_path);
-      chrome_scheme = message.scheme;
-      focus_changed = false;
+    let icon_path = {path: {'128': 'bypass.png'}};
+    if (message.scheme === 'dark')
+      icon_path = {path: {'128': 'bypass-dark.png'}};
+    ext_api.action.setIcon(icon_path);
+    chrome_scheme = message.scheme;
+    focus_changed = false;
   }
 });
 
@@ -1512,7 +1598,7 @@ function compareKey(firstStr, secondStr) {
 
 function isSiteEnabled(details) {
   var enabledSite = matchUrlDomain(enabledSites, details.url);
-  if (!ext_name.startsWith('Bypass Paywalls Clean'))
+  if (!ext_name.startsWith('Bypass Paywalls Clean') || !(self_hosted || /0$/.test(ext_version)))
     enabledSite = '';
   if (enabledSite in restrictions) {
     return restrictions[enabledSite].test(details.url);
@@ -1556,8 +1642,8 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-function stripQueryStringAndHashFromPath(url) {
-  return url.split("?")[0].split("#")[0];
+function stripUrl(url) {
+  return url.split(/[\?#]/)[0];
 }
 
 function decode_utf8(str) {

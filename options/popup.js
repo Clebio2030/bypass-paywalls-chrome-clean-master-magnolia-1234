@@ -4,7 +4,7 @@ var manifestData = ext_api.runtime.getManifest();
 var navigator_ua = navigator.userAgent;
 var navigator_ua_mobile = navigator_ua.toLowerCase().includes('mobile');
 var yandex_browser = navigator_ua_mobile && (url_loc === 'chrome') && navigator_ua.toLowerCase().includes('yabrowser');
-var custom_switch = ((manifestData.optional_permissions && manifestData.optional_permissions.length) || (manifestData.optional_host_permissions && manifestData.optional_host_permissions.length)) && !(navigator_ua_mobile && !yandex_browser);
+var custom_switch = ((manifestData.optional_permissions && manifestData.optional_permissions.length) || (manifestData.optional_host_permissions && manifestData.optional_host_permissions.length)) && !(navigator_ua_mobile && (url_loc === 'chrome') && !yandex_browser);
 
 function popup_show_toggle(domain, enabled) {
   if (domain && !matchDomain(['webcache.googleusercontent.com'], domain)) {
@@ -89,7 +89,6 @@ function showArchiveLinks() {
         'Archive.today': 'https://archive.today?run=1&url=' + url_enc,
         'Google webcache': 'https://webcache.googleusercontent.com/search?q=cache:' + url_enc,
         'Clearthis.page': 'https://clearthis.page?u=' + url,
-        '12ft.io': 'https://12ft.io/' + url,
         'Google Search Tool\n(use online html-viewer - no fix)': 'https://search.google.com/test/rich-results?url=' + url_enc
       };
       let archive_id = document.querySelector('span#archive');
@@ -99,8 +98,9 @@ function showArchiveLinks() {
           let elem_div = document.createElement('div');
           let elem = document.createElement('a');
           elem.innerText = key;
-          if (!(matchDomain(['12ft.io', 'clearthis.page', 'google.com', 'googleusercontent.com'], hostname) || hostname.match(/^archive\.\w{2}$/))) {
+          if (!(matchDomain(['1ft.io', 'clearthis.page', 'google.com', 'googleusercontent.com'], hostname) || hostname.match(/^archive\.\w{2}$/))) {
             elem.href = archive_array[key];
+            elem.title = elem.href;
             elem.target = '_blank';
             elem_div.appendChild(elem);
             archive_id.appendChild(elem_div);

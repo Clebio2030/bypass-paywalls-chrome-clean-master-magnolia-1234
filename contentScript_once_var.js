@@ -6,9 +6,9 @@ var de_madsack_domains = ['haz.de', 'kn-online.de', 'ln-online.de', 'lvz.de', 'm
 
 if (hostname.match(/\.de$/)) {
 
-if (matchDomain(de_madsack_domains) || document.querySelector('link[href*=".rndtech.de/"]')) {
+if (matchDomain(de_madsack_domains) || document.querySelector('head > link[href*=".rndtech.de/"]')) {
   function madsack_main() {
-    for (let n = 0; n < 10; n++) {
+    for (let n = 0; n < 25; n++) {
       window.setTimeout(function () {
         if (window.Fusion) {
           window.Fusion.globalContent.isPaid = false;
@@ -21,8 +21,21 @@ if (matchDomain(de_madsack_domains) || document.querySelector('link[href*=".rndt
 
 }
 
+if (matchDomain('dagsavisen.no')) {
+  function dagsavisen_main() {
+    for (let n = 0; n < 25; n++) {
+      window.setTimeout(function () {
+        if (window.Fusion && window.Fusion.globalContent.content_restrictions) {
+         window.Fusion.globalContent.content_restrictions.content_code = 0;
+        }
+      }, n * 50);
+    }
+  }
+  insert_script(dagsavisen_main);
+}
+
 else if (matchDomain(['journaldemontreal.com', 'journaldequebec.com'])) {
-  for (let n = 0; n < 10; n++) {
+  for (let n = 0; n < 50; n++) {
     window.setTimeout(function () {
       let article = document.querySelector('div.article-main-txt.composer-content');
       if (article)
@@ -33,7 +46,7 @@ else if (matchDomain(['journaldemontreal.com', 'journaldequebec.com'])) {
 
 else if (matchDomain('nzherald.co.nz')) {
   function nzherald_main() {
-    for (let n = 0; n < 10; n++) {
+    for (let n = 0; n < 25; n++) {
       window.setTimeout(function () {
         if (window.Fusion) {
           window.Fusion.globalContent.isPremium = false;
@@ -42,19 +55,6 @@ else if (matchDomain('nzherald.co.nz')) {
     }
   }
   insert_script(nzherald_main);
-}
-
-else if (matchDomain('theglobeandmail.com')) {
-  function tgam_main() {
-    for (let n = 0; n < 10; n++) {
-      window.setTimeout(function () {
-        if (window.Fusion) {
-          window.Fusion.globalContent._id = '';
-        }
-      }, n * 50);
-    }
-  }
-  insert_script(tgam_main);
 }
 
 function matchDomain(domains, hostname) {
@@ -100,6 +100,7 @@ function insert_script(func, insertAfterDom) {
     script.setAttribute('id', 'bpc_script');
     script.appendChild(document.createTextNode('(' + func + ')();'));
     let insertAfter = insertAfterDom ? insertAfterDom : (document.body || document.head || document.documentElement);
-    insertAfter.appendChild(script);
+    if (insertAfter)
+      insertAfter.appendChild(script);
   }
 }

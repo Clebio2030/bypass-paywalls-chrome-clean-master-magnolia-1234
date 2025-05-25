@@ -12,6 +12,7 @@ To remove this message you'll have to remove the added policy from the registry 
 If you still want to add the extension to the allowlist:
 
 Run as administrator one of the reg-files in allowlist-folder of extension (unzip).
+* for Edge 116+ you may also need to run the *Forcelist* reg-file (also undo reg-file provided) or switch to *Load unpacked* installation.
 
 If you already added extensions to the allowlist than you should change "1" to a new value (also change name of HLM-key for beta/developer versions of browsers).\
 To add more extensions to the allowlist you can add more lines.\

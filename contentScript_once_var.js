@@ -2,7 +2,7 @@
 var ext_api = (typeof browser === 'object') ? browser : chrome;
 
 var hostname = window.location.hostname;
-var de_madsack_domains = ['haz.de', 'kn-online.de', 'ln-online.de', 'lvz.de', 'maz-online.de', 'neuepresse.de', 'ostsee-zeitung.de', 'rnd.de'];
+var de_madsack_domains = ['haz.de', 'kn-online.de', 'ln-online.de', 'lvz.de', 'maz-online.de', 'neuepresse.de', 'ostsee-zeitung.de', 'rnd.de', 'saechsische.de'];
 
 if (hostname.match(/\.de$/)) {
 

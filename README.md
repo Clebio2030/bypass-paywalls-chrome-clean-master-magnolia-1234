@@ -1,5 +1,7 @@
 # Bypass Paywalls Clean for Chrome
 
+[online](https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean)
+
 Extension allows you to read articles from (supported) sites that implement a paywall.  
 You can also add a domain as custom site and try to bypass the paywall.  
 Weekly updates are released for fixes and new sites.
@@ -20,63 +22,69 @@ Weekly updates are released for fixes and new sites.
 ### Installation
 This extension is not available on the Google Chrome Web Store.  
 The following instructions are needed to install third-party extensions in [Chromium](https://en.wikipedia.org/wiki/Chromium_(web_browser))-based desktop browsers.  
-In extension developer mode you can always install BPC by `Load unpacked` (latest master, but no automatic updates) or by crx-file (latest release & automatic updates, but possibly you have to add the extension to the allowlist).  
+In extension developer mode you can always install BPC by *Load unpacked* (latest master, but no automatic updates) or by crx-file (latest release & automatic updates, but possibly you have to add the extension to the allowlist).  
 You can add/pin the extension icon to the toolbar with the toolbar extensions menu (jigsaw puzzle shaped icon).
 
 #### Load unpacked: Chrome, MS Edge or Brave (all desktop)
-* or add extension to allowlist and install automatically updating crx-file (see next section)
+\* or add extension to allowlist and install automatically updating crx-file (see next section)
 
-1. Download this repository as a zip-file from [GitHub](https://github.com/bpc-clone/bpc_updates/releases/latest/download/bypass-paywalls-chrome-clean-master.zip).
-2. Unzip the file and you should have a folder named `bypass-paywalls-chrome-clean-master`
+1. Download this repository as a zip-file from [GitFlic](https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass-paywalls-chrome-clean-master.zip)
+2. Unzip the file and you should have a folder named *bypass-paywalls-chrome-clean-master*
 3. Move the folder to a permanent location on your computer (do not delete the folder after installation).
-4. Go to the extensions page: `chrome://extensions`
+4. Go to the extensions page: *chrome://extensions*
 5. Enable Developer Mode.
-6. Click `Load unpacked` and select/open the extension folder (contains file manifest.json).
+6. Click *Load unpacked* and select/open the extension folder (contains file manifest.json).
 
-*  By default BPC has limited host permissions, but you can opt-in to enable custom sites (and also clear cookies/block general paywall-scripts for unlisted sites). You can also just request host permissions for the custom sites you added yourself (or *clear cookies* (BPC-icon) to ask for host permission for current site).
+\*  By default BPC has limited host permissions, but you can opt-in to enable custom sites (and also clear cookies/block general paywall-scripts for unlisted sites). You can also just request host permissions for the custom sites you added yourself (or *clear cookies* (BPC-icon) to ask for host permission for current site).
 
 #### CRX-file: other Chromium browsers (Opera/Vivaldi/Yandex)
-* or add extension to allowlist for Chrome, MS Edge or Brave (see instructions [local](allowlist/README.html) or [online](https://github.com/bpc-clone/bypass-paywalls-chrome-clean/blob/master/allowlist/README.md))
+\* or add extension to allowlist for Chrome, MS Edge or Brave (see instructions [local](allowlist/README.html) or [online](https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean/blob?file=allowlist%2FREADME.md))
 
-1. Download the extension as a crx-file from [GitHub](https://github.com/bpc-clone/bpc_updates/releases/latest) (right-click > save link as).
-2. In your browser go to the extensions page: `chrome://extensions`
+1. Download the latest release as crx-file from [GitFlic](https://gitflic.ru/project/magnolia1234/bpc_uploads)
+2. In your browser go to the extensions page: *chrome://extensions*
 3. Enable Developer Mode.
 4. Drag your crx-file anywhere on the page to import it (when you have an active 'load unpacked' installation, first remove it (and backup your custom sites); for automatic updates).
 
-* By default BPC has limited permissions, but you can opt-in to enable custom sites (and also clear cookies/block general paywall-scripts for unlisted sites). You can also just request host permissions for the custom sites you added yourself (or *clear cookies* (BPC-icon) to ask for host permission for current site).
+\* By default BPC has limited permissions, but you can opt-in to enable custom sites (and also clear cookies/block general paywall-scripts for unlisted sites). You can also just request host permissions for the custom sites you added yourself (or *clear cookies* (BPC-icon) to ask for host permission for current site).
 
 ### Update
 For crx-installation: extension will update automatically or check for updates (in chrome://extensions).\
 Extension may be disabled (in Chrome/Edge) when extension needs new host permissions for added domains: opt-in/opt-out to custom sites once to disable this 'error' (browser will remember granted host permissions).
 
-For zip-installation (load unpacked/developer mode): unzip files to installation folder.
+For zip-installation (load unpacked/developer mode): unzip files to installation folder (& reload extension).
 
 You can also check for (post-release) updates of site rules at startup (opt-in); only available until about 10 days after fix-release.\
 For new (updated) sites you also have to opt-in to custom sites/request host permissions for new domains (or wait for new release).
 
 #### Android
-1. Install [Kiwi Browser](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=nl) from the Google PlayStore.
-2. You have two options:
-* load the CRX-file in releases (auto-updating, no allowlist needed, opt-in for custom sites not working (use kiwi-custom crx; updates to latest regular version)
+Install [Quetta Browser](https://play.google.com/store/apps/details?id=net.quetta.browser) from the Google PlayStore. You have two options:
+* load the latest release as crx-file from [GitFlic](https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass-paywalls-chrome-clean-latest.crx) (auto-updating, no allowlist needed)
 * install latest master zip-file (no automatic updates, for custom sites use manifest.json from custom folder).
 
+\* for custom sites use [android-custom crx-file](https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass-paywalls-chrome-clean-android-custom.crx) (no grant of host permissions on Android).\
+\* Quetta Browser may disable the extension on update (of host permissions): re-enable it or install the android-custom crx-file.\
+\* [Kiwi Browser](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser) is officially abandoned, but this extension will still be updated.\
+\* Lemur Browser and Edge Canary for Android are still quite buggy (extension not (fully) supported).
+
 #### Firefox
-Visit the [Firefox repository on GitHub](https://github.com/bpc-clone/bypass-paywalls-firefox-clean) of Bypass Paywall Clean.\
-Or install xpi-file from [GitHub](https://github.com/bpc-clone/bpc_updates/releases/latest)
+Visit the [Firefox repository on GitFlic](https://gitflic.ru/project/magnolia1234/bypass-paywalls-firefox-clean) of Bypass Paywalls Clean.\
+Or install latest release as xpi-file from [GitFlic](https://gitflic.ru/project/magnolia1234/bpc_uploads)
 
 #### iOS/iPadOS
-Use adblocker with custom (content)filter & userscript (manager): https://github.com/bpc-clone/bypass-paywalls-clean-filters (read instructions).
+Use adblocker with custom (content)filter & userscript (manager): [Bypass Paywalls Clean filters](https://gitflic.ru/project/magnolia1234/bypass-paywalls-clean-filters) (read instructions).
 
 Although [Orion Browser](https://apps.apple.com/us/app/orion-browser-by-kagi/id1484498200) supports installing this extension, it won't work for a lot of sites (no full support of WebExtensions API on iOS/iPadOS).
 
 ### Troubleshooting
 * If a site doesn't work, first try to turn off your adblocker (or other extension) and refresh page.
-* Make sure the (new) site is checked under Options.
+* Make sure the (new) site is checked under Options (or not in no-fix list when you search the domain).
 * Clear cookies by extension's icon (popup) and grant host permission for site (or opt-in to custom sites)
 * You will be logged out for some of the sites you have enabled.
 * Make sure you're running the latest version of Bypass Paywalls Clean.
-* Some sites need to redirect to an amp-page (this may cause a redirect-loop by an amp-to-html extension or browser setting like in Kiwi Browser (Android) > Settings > Privacy and security > Remove AMP).
-* If none of these work, you can submit an issue on [GitHub](https://github.com/bpc-clone/bypass-paywalls-chrome-clean/issues) or [X (DM)](https://x.com/Magnolia1234B).
+* archive.is/today will not work with Secured DNS by Cloudflare (or when you change referer/user-agent for the archive site)
+* for Google Search/Inspection Tool test url, view tested page, copy html (tab) code to https://codebeautify.org/htmlviewer & *Open in New Window*: click BPC icon once to clean layout of page (or use tool for desktop & open screenshot in new tab)
+* Some sites need to redirect to an amp-page (this may cause a redirect-loop by an amp-to-html extension or browser setting like in Kiwi Browser (Android) > Settings > Privacy and security > Remove AMP or in Quetta Browser (Android) > Settings > Privacy Guard > Advanced > Auto De-AMP).
+* If none of these work, you can submit an issue on [GitHub](https://github.com/bpc-clone/bpc_chrome_support/issues) or only when GitHub repo is offline use [X (DM)](https://x.com/Magnolia1234B).
 * Always provide used extension version, paywalled article (url) and describe issue in detail.
 * This extension works best alongside the adblocker [uBlock Origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm).
 * If you live in the EU, also consider adding these filters to your adblocker (in order to remove cookie warnings): [Easylist Cookies](https://secure.fanboy.co.nz/fanboy-cookiemonster.txt) | [I don't care about cookies custom filter](https://www.i-dont-care-about-cookies.eu/abp). Some sites need to set a consent-cookie for (social) media.
@@ -96,20 +104,20 @@ _* free articles only._
 [Adweek](https://www.adweek.com) -
 [American Affairs](https://americanaffairsjournal.org) -
 [Barron's](https://www.barrons.com) -
+[Benzinga](https://www.benzinga.com) -
 [Bloomberg](https://www.bloomberg.com) -
 [Business Insider](https://www.businessinsider.com) -
+[Citywire](https://www.citywire.com) -
 [CNBC](https://www.cnbc.com) -
 [Fast Company](https://www.fastcompany.com) -
 [Forbes](https://www.forbes.com) -
 [Fortune](https://fortune.com) -
 [Harvard Business Review](https://www.hbr.org) -
 [Inc.com](https://www.inc.com) -
-[Law.com](https://www.law.com)* -
 [MarketWatch](https://www.marketwatch.com) -
 [MIT Sloan Management Review](https://sloanreview.mit.edu) -
 [Quartz](https://qz.com) -
 [S&P Global](https://www.spglobal.com) -
-[Seeking Alpha](https://seekingalpha.com) -
 [Stock News](https://stocknews.com) -
 [The Business Journals](https://www.bizjournals.com)* -
 [The Business of Fashion](https://www.businessoffashion.com) -
@@ -152,9 +160,11 @@ Global Polymer Group:
 *[PEI Media](https://www.pei.group/brands)* sites (opt-in to custom sites)
 
 ##### Tech/Science
+[Brill](https://brill.com) -
 [Bulletin of the Atomic Scientists](https://thebulletin.org) -
 [Chemical & Engineering News](https://cen.acs.org) -
 [Discover Magazine](https://www.discovermagazine.com) -
+[History Today](https://www.historytoday.com) -
 [Inside Higher Ed](https://www.insidehighered.com) -
 [Interesting Engineering](https://interestingengineering.com) -
 [Medscape](https://www.medscape.com) -
@@ -164,7 +174,9 @@ Global Polymer Group:
 [New Scientist](https://www.newscientist.com) -
 [Popular Science](https://www.popsci.com) -
 [Science](https://www.science.org)* -
+[ScienceNews.org](https://www.sciencenews.org) -
 [Scientific American](https://www.scientificamerican.com) -
+[StatNews](https://www.statnews.com) -
 [The Scientist](https://www.the-scientist.com) -
 [Times Higher Education](https://www.timeshighereducation.com)
 
@@ -190,10 +202,10 @@ Grouped in options:\
 [Quora](https://www.quora.com) -
 [Scholastic](https://www.scholastic.com) -
 [SlideShare](https://www.slideshare.net) -
-[Statista](https://www.statista.com) -
 [Study.com (only lessons; no videos)](https://study.com)
 
 ###### Sports
+[CyclingNews](https://www.cyclingnews.com) -
 [ESPN USA](https://www.espn.com) -
 [RugbyPass](https://www.rugbypass.com) -
 [Sports Illustrated](https://www.si.com) -
@@ -206,6 +218,7 @@ Grouped in options:\
 [Better Programming](https://betterprogramming.pub) -
 [Towards Data Science](https://towardsdatascience.com)
 
+[Al-Monitor](https://www.al-monitor.com) -
 [America's Test Kitchen](https://www.americastestkitchen.com) -
 [American Purpose](https://www.americanpurpose.com) -
 [Apollo Magazine](https://www.apollo-magazine.com) -
@@ -213,6 +226,7 @@ Grouped in options:\
 [Artnet](https://www.artnet.com) -
 [Atavist Magazine](https://magazine.atavist.com) -
 [Axios](https://www.axios.com) -
+[Blaze Media](https://www.theblaze.com) -
 [Commentary Magazine](https://www.commentary.org) -
 [Defector](https://defector.com) -
 [Dwell](https://www.dwell.com) -
@@ -221,14 +235,15 @@ Grouped in options:\
 [Foreign Affairs](https://www.foreignaffairs.com) -
 [Foreign Policy](https://www.foreignpolicy.com) -
 [Harper's Magazine](https://harpers.org) -
-[Jane's Defence Weekly](https://www.janes.com/defence-news/) -
-[Jazziz](https://www.jazziz.com) -
 [Jazzwise](https://www.jazzwise.com) -
 [National Review](https://www.nationalreview.com) -
 [Newsweek](https://www.newsweek.com) -
 [Outdoor Life](https://www.outdoorlife.com) -
+[Paste Magazine](https://www.pastemagazine.com) -
 [Pirate Wires](https://www.piratewires.com) -
+[Politico](https://www.politico.com) -
 [Project Syndicate](https://www.project-syndicate.org) -
+[Puck.news](https://puck.news) -
 [Slate](https://slate.com) -
 [SofRep](https://sofrep.com) -
 [Stereogum](https://www.stereogum.com) -
@@ -236,15 +251,17 @@ Grouped in options:\
 [Texas Monthly](https://www.texasmonthly.com) -
 [The American Conservative](https://www.theamericanconservative.com) -
 [The American Interest](https://www.the-american-interest.com) -
+[The American Scholar](https://theamericanscholar.org) -
 [The Art Newspaper](https://www.theartnewspaper.com) -
 [The Atlantic](https://www.theatlantic.com) -
 [The Baffler](https://thebaffler.com) -
 [The Christian Science Monitor](https://www.csmonitor.com) -
-[The Intercept](https://theintercept.com) -
 [The Daily Beast](https://www.thedailybeast.com) -
 [The Daily Wire](https://www.dailywire.com) -
 [The Diplomat](https://thediplomat.com) -
+[The Dispatch](https://thedispatch.com) -
 [The Impression](https://theimpression.com) -
+[The Intercept](https://theintercept.com) -
 [The Juggernaut](https://www.thejuggernaut.com) -
 [The Lamp Magazine](https://thelampmagazine.com) -
 [The Nation](https://www.thenation.com) -
@@ -254,9 +271,9 @@ Grouped in options:\
 [The New York Review of Books](https://www.nybooks.com) -
 [The Point Magazine](https://thepointmag.com) -
 [The Spectator World](https://thespectator.com) -
-[The Verge](https://www.theverge.com) -
 [The Week](https://theweek.com) -
 [The Wrap](https://www.thewrap.com) -
+[Vice](https://www.vice.com) -
 [Washington Examiner](https://www.washingtonexaminer.com)
 
 Grouped in options:\
@@ -311,33 +328,40 @@ Grouped in options:\
 [Sportico](https://www.sportico.com) -
 [Variety](https://variety.com) -
 [WWD](https://wwd.com)\
-*The Epoch Times* sites like (opt-in to custom sites for cz|de|fr|jp|ro sites)\
+*The Epoch Times* sites like (opt-in to custom sites for br|cz|de|fr|jp|ro sites)\
 [Epoch.org.il](https://epoch.org.il) -
-[The Epoch Times](https://www.theepochtimes.com)
+[The Epoch Times](https://www.theepochtimes.com)\
+*Vox Media Group* sites like\
+[Curbed](https://www.curbed.com) -
+[Grub Street](https://www.grubstreet.com) -
+[New York Magazine](https://www.nymag.com) -
+[The Cut](https://www.thecut.com) -
+[The Verge](https://www.theverge.com) -
+[Vox](https://www.vox.com) -
+[Vulture](https://www.vulture.com)
 
 ##### Local USA news
 [Albuquerque Journal](https://www.abqjournal.com) -
 [CNN](https://www.cnn.com) -
 [Fox News](https://www.foxnews.com) -
 [Honolulu Star-Advertiser](https://www.staradvertiser.com) -
+[Las Vegas Review-Journal](https://www.reviewjournal.com) -
 [Los Angeles Times](https://www.latimes.com) -
 [Mountain View Voice](https://www.mv-voice.com) -
-[New York Magazine](https://www.nymag.com) (+ [Curbed](https://www.curbed.com), [Grub Street](https://www.grubstreet.com), [The Cut](https://www.thecut.com) & [Vulture](https://www.vulture.com)) -
 [Newsday](https://www.newsday.com) -
 [Palo Alto Online](https://www.paloaltoonline.com) -
 [Pittsburgh Post Gazette](https://www.post-gazette.com) -
-[San Diego Union Tribune](https://www.sandiegouniontribune.com) -
 [Star Tribune](https://www.startribune.com) -
 [Tampa Bay Times](https://www.tampabay.com) -
-[The Advocate](https://www.theadvocate.com) -
+[The Atlanta Journal-Constitution](https://www.ajc.com)\
+[The Baltimore Banner](https://www.thebaltimorebanner.com) -
 [The Boston Globe](https://www.bostonglobe.com) -
 [The Columbian](https://www.columbian.com) -
 [The Dallas Morning News](https://www.dallasnews.com) -
 [The Hill](https://thehill.com) -
-[The New Orleans Advocate/The Times-Picayune](https://www.nola.com) -
-[The New York Post](https://nypost.com) -
 [The New York Sun](https://www.nysun.com) -
 [The Salt Lake Tribune](https://www.sltrib.com) -
+[The San Francisco Standard](https://www.sfstandard.com) -
 [The Seattle Times](https://www.seattletimes.com) -
 [The Philadelphia Inquirer](https://www.inquirer.com)
 
@@ -354,6 +378,7 @@ Grouped in options:\
 [The Plain Dealer](https://www.cleveland.com) -
 [The Post-Standard](https://www.syracuse.com) -
 [The Republican](https://www.masslive.com)\
+*[CNHI Group](https://www.cnhi.com/newspapers)* sites (opt-in to custom sites)\
 *[Forum Communications](https://www.forumcomm.com/brands)* sites (opt-in to custom sites)\
 *Gannett Group (local USA Today)* sites like (opt-in to custom sites for unlisted)\
 [Austin American-Statesman](https://www.statesman.com) -
@@ -412,12 +437,16 @@ Grouped in options:\
 [Boston Herald](https://www.bostonherald.com) -
 [East Bay Times](https://www.eastbaytimes.com) -
 [Orange County Register](https://www.ocregister.com) -
+[San Diego Union Tribune](https://www.sandiegouniontribune.com) -
 [St. Paul Pioneer Press](https://www.twincities.com) -
 [The Denver Post](https://www.denverpost.com) -
 [The Mercury News](https://www.mercurynews.com) -
 [The Press-Enterprise](https://www.pressenterprise.com)\
-*[The Atlanta Journal-Constitution](https://www.ajc.com) + Cox First Media* (opt-in to custom sites)\
-*TownNews sites (Blox CMS)* sites (opt-in to custom sites)\
+*The (New Orleans) Advocate Group* sites like\
+[The Advocate](https://www.theadvocate.com) -
+[The New Orleans Advocate/The Times-Picayune](https://www.nola.com) -
+[The Shreveport-Bossier City Advocate](https://www.shreveportbossieradvocate.com)\
+*TownNews sites (Blox CMS)* (opt-in to custom sites)\
 *Tribune Publishing Company* sites like\
 [Baltimore Sun](https://www.baltimoresun.com) -
 [Capital Gazette](https://www.capitalgazette.com) -
@@ -433,10 +462,9 @@ Grouped in options:\
 #### Canada
 [iPolitics](https://www.ipolitics.ca) -
 [Le Devoir](https://www.ledevoir.com) -
-[Saltwire Network](https://www.saltwire.com) -
 [The Globe and Mail](https://www.theglobeandmail.com) -
 [The Hill Times](https://www.hilltimes.com) -
-[The Lawyer's Daily](https://www.thelawyersdaily.ca) -
+[The Logic](https://thelogic.co) -
 [Winnipeg Free Press](https://www.winnipegfreepress.com)
 
 Grouped in options:\
@@ -459,7 +487,8 @@ Grouped in options:\
 [St. Catharines Standard](https://www.stcatharinesstandard.ca) -
 [The Hamilton Spectator](https://www.thespec.com) -
 [Waterloo Region Record](https://www.therecord.com) -
-[Welland Tribune](https://www.wellandtribune.ca)
+[Welland Tribune](https://www.wellandtribune.ca)\
+*[Valnet Group](https://www.valnetinc.com/our-brands)* sites (opt-in to custom sites)
 
 #### Europe
 
@@ -473,8 +502,7 @@ Grouped in options:\
 [Autosport](https://www.autosport.com)* -
 [Belfast Telegraph](https://www.belfasttelegraph.co.uk) -
 [Business Post](https://www.businesspost.ie) -
-[Citywire](https://www.citywire.com) -
-[Daily Mail](https://www.dailymail.co.uk) -
+[Decanter](https://www.decanter.com) -
 [Evening Standard](https://www.standard.co.uk) -
 [Financial News](https://www.fnlondon.com) -
 [Financial Times](https://www.ft.com) -
@@ -487,68 +515,90 @@ Grouped in options:\
 [London Review of Books](https://www.lrb.co.uk) -
 [Monocle](https://monocle.com) -
 [Motor Sport Magazine](https://www.motorsportmagazine.com) -
-[New Left Review](https://newleftreview.org) -
 [Prospect Magazine](https://www.prospectmagazine.co.uk) -
 [Stylist](https://www.stylist.co.uk) -
 [Tes Magazine](https://www.tes.com/magazine) -
 [The Critic](https://thecritic.co.uk) -
 [The Economist](https://www.economist.com) -
-[The Independent](https://www.independent.co.uk) -
 [The Irish Examiner](https://www.irishexaminer.com) -
+[The Irish News](https://www.irishnews.com) -
 [The Irish Times](https://www.irishtimes.com) -
+[The Lawyer](https://www.thelawyer.com) -
 [The New European](https://www.theneweuropean.co.uk) -
 [The New Statesman](https://www.newstatesman.com) -
 [The Spectator](https://www.spectator.co.uk) -
 [The Telegraph](https://www.telegraph.co.uk) -
-[The Times](https://www.thetimes.co.uk) -
+[The Times](https://www.thetimes.com) -
 [The Times Literary Supplement](https://www.the-tls.co.uk) -
 [UnHerd](https://unherd.com)
 
 Grouped in options:\
-*[DVV Media International](https://www.dvvmediainternational.com/)* sites (opt-in to custom sites)\
+*Daily Mail Group* sites like\
+[Daily Mail](https://www.dailymail.co.uk) -
+[Mail on Sunday](https://www.mailonsunday.co.uk) -
+[This is Money](https://www.thisismoney.co.uk)\
+*[DVV Media International](https://www.dvvmediainternational.com)* sites (opt-in to custom sites)\
 *[Haymarket Media Group](https://haymarket.com/brands)* sites (opt-in to custom sites)\
 *[Haymarket Medical Network](https://www.haymarketmedicalnetwork.com)* sites (opt-in to custom sites)\
-*[Incisive Media](https://www.incisivemedia.com/brands)* sites (opt-in to custom sites)\
 *National World Publishing* sites like (opt-in to custom sites for unlisted)\
 [The Scotsman](https://www.scotsman.com) -
 [Yorkshire Post](https://www.yorkshirepost.co.uk)\
+*Oxford University Press* sites (opt-in to custom sites)*\
 *[Newsquest Media Group](https://www.newsquest.co.uk/news-brands)* sites (opt-in to custom sites)\
+*The Independent Group* sites like\
+[The Independent UK ](https://www.independent.co.uk) -
+[The Independent USA ](https://www.the-independent.com)\
 *The Stage Media* sites like:\
 [The Bookseller](https://www.thebookseller.com) -
-[The Stage](https://www.thestage.co.uk)
+[The Stage](https://www.thestage.co.uk)\
+*The Sun Group* sites like\
+[The Scottish Sun](https://www.thescottishsun.co.uk) -
+[The Sun UK](https://www.thesun.co.uk)\
+*[William Reed Group](https://www.william-reed.com/what-we-do)* sites (opt-in to custom sites)
+
+##### Bulgaria
+[Capital](https://www.capital.bg) -
+[Dnevnik](https://www.dnevnik.bg)
+
+##### Czechia
+[Deník](https://www.denik.cz)
 
 ##### Denmark
 [Berlingske](https://www.berlingske.dk)
+
+Grouped in options:\
+*[DK Medier](https://www.dkmedier.dk)* sites (opt-in to custom sites)
 
 ##### Finland
 [Suomen Sotilas](https://suomensotilas.fi)
 
 ##### France/Wallonia
 [60 Millions de consommateurs](https://www.60millions-mag.com) -
+[Actu.fr](https://actu.fr) -
 [Alternatives Economiques](https://www.alternatives-economiques.fr) -
+[Aoc media](https://aoc.media) -
 [Atlantico](https://atlantico.fr) -
+[Auto Hebdo](https://www.autohebdo.fr) -
 [Auto Plus](https://www.autoplus.fr) -
 [Capital](https://www.capital.fr) -
 [Causeur](https://www.causeur.fr) -
 [Challenges](https://www.challenges.fr) -
 [Charlie Hebdo](https://charliehebdo.fr) -
-[Ciel & espace](https://www.cieletespace.fr) -
 [Connaissance des Arts](https://www.connaissancedesarts.com) -
 [Cosmopolitan](https://www.cosmopolitan.fr) -
 [Courrier international](https://www.courrierinternational.com) -
 [Elle](https://www.elle.fr) -
 [Esprit](https://esprit.presse.fr) -
+[Jeune Afrique](https://www.jeuneafrique.com) -
 [L'Écho](https://lecho.be) -
+[L'Équipe](https://www.lequipe.fr) -
 [L'Express](https://www.lexpress.fr) -
-[L'Humanité](https://www.humanite.fr) -
 [L'Informé](https://www.linforme.com) -
-[L'Obs](https://www.nouvelobs.com) -
 [L'Oeil de la Photographie (fr/en)](https://loeildelaphotographie.com) -
 [L'Opinion](https://www.lopinion.fr) -
-[La Croix](https://www.la-croix.com) -
 [La Nouvelle République du Centre-Ouest](https://www.lanouvellerepublique.fr) -
-[La Tribune](https://www.latribune.fr) -
 [Le Courrier des Stratèges](https://lecourrierdesstrateges.fr) -
+[Le Figaro](https://www.lefigaro.fr) -
 [Le Grand Continent](https://legrandcontinent.eu) -
 [Le Journal du Dimanche](https://lejdd.fr) -
 [Le Journal du Net](https://www.journaldunet.com) -
@@ -556,27 +606,33 @@ Grouped in options:\
 [Le Nouvel Economiste](https://www.lenouveleconomiste.fr) -
 [Le Parisien](https://www.leparisien.fr) -
 [Le Point](https://www.lepoint.fr) -
+[Le Revenu](https://www.lerevenu.com) -
 [Le Télégramme](https://www.letelegramme.fr) -
+[Le Un](https://le1hebdo.fr) -
 [Les Échos](https://www.lesechos.fr) -
 [Les Inrockuptibles](https://www.lesinrocks.com) -
 [Libération](https://www.liberation.fr) -
+[Marianne](https://www.marianne.net) -
 [Paris Match](https://www.parismatch.com) -
+[Philonomist (fr/en)](https://www.philonomist.com) -
 [Philosophie Magazine](https://www.philomag.com) -
 [Politis](https://www.politis.fr) -
 [Pour l'Éco](https://www.pourleco.com) -
 [Pour la Science](https://www.pourlascience.fr) -
 [Public](https://www.public.fr) -
+[Réforme](https://www.reforme.net) -
 [Revue Conflits](https://www.revueconflits.com) -
 [Science & Vie](https://www.science-et-vie.com) -
 [Sciences et Avenir](https://www.sciencesetavenir.fr) -
+[Sciences Humaines](https://www.scienceshumaines.com) -
 [Télérama](https://www.telerama.fr) -
-[Valeurs Actuelles](https://www.valeursactuelles.com)
+[Valeurs Actuelles](https://www.valeursactuelles.com) -
+[XXI](https://www.revue21.fr)
 
 Grouped in options:\
 *Groupe Centre France* sites like (opt-in to custom sites for unlisted)\
 [La Montagne](https://www.lamontagne.fr)\
 *Groupe Infopro Digital* sites like (opt-in to custom sites for unlisted)\
-[Le Moniteur](https://www.lemoniteur.fr) -
 [L'Usine Nouvelle](https://www.usinenouvelle.com)\
 *Groupe IPM* sites like\
 [DH Les Sports+](https://www.dhnet.be) -
@@ -611,42 +667,40 @@ Grouped in options:\
 [LeMagIT](https://www.lemagit.fr)
 
 ##### Germany/Austria
+[Aachener Zeitung](https://www.aachener-zeitung.de) -
 [Ärzte Zeitung](https://www.aerztezeitung.de) -
-[Augsburger Allgemeine](https://www.augsburger-allgemeine.de) -
 [Automobilwoche](https://www.automobilwoche.de) -
 [Berliner Zeitung](https://www.berliner-zeitung.de) -
 [Bild](https://www.bild.de) -
 [Börsen-Zeitung](https://www.boersen-zeitung.de) -
-[Cicero](https://www.cicero.de) -
-[Der Aktionär](https://www.deraktionaer.de) -
 [Der Freitag](https://www.freitag.de) -
 [Der Spiegel](https://www.spiegel.de) -
 [Der Tagesspiegel](https://www.tagesspiegel.de) -
-[Die Presse](https://www.diepresse.com) -
+[Die Rheinpfalz](https://www.rheinpfalz.de) -
 [Die Welt](https://www.welt.de) -
 [Die Zeit](https://www.zeit.de) -
 [Frankfurter Allgemeine Zeitung](https://www.faz.net) -
-[Freie Presse](https://www.freiepresse.de) -
+[Hamburger Morgenpost](https://www.mopo.de) -
+[Handelsblatt](https://www.handelsblatt.com) -
+[Heise online](https://www.heise.de) -
 [Jacobin Magazin](https://jacobin.de) -
 [Kölner Stadt-Anzeiger](https://www.ksta.de) -
 [Kölnische Rundschau](https://www.rundschau-online.de) -
 [Krautreporter](https://krautreporter.de) -
 [Kurier.at](https://kurier.at) -
-[Mitteldeutsche Zeitung](https://www.mz.de) -
+[Manager Magazin](https://www.manager-magazin.de) -
 [Neue Westfälische](https://www.nw.de) -
 [Nordwest Zeitung](https://www.nwzonline.de) -
 [Philosophie Magazin](https://www.philomag.de) -
 [Piqd](https://www.piqd.de) -
 [Profil.at](https://www.profil.at) -
-[Rhein-Zeitung](https://www.rhein-zeitung.de) -
-[Salzburger Nachrichten](https://www.sn.at) -
-[Schwäbische Zeitung](https://www.schwaebische.de) -
 [Spektrum](https://www.spektrum.de) -
 [Springer Medizin](https://www.springermedizin.de) -
+[Stern](https://www.stern.de) -
 [Süddeutsche Zeitung](https://www.sueddeutsche.de) -
 [Südkurier](https://www.suedkurier.de) -
+[T3n](https://t3n.de) -
 [Tiroler Tageszeitung](https://www.tt.com) -
-[Volksstimme](https://www.volksstimme.de) -
 [Vorarlberg Nachrichten](https://www.vn.at) -
 [Vorarlberg Online](https://www.vol.at) -
 [Weltkunst](https://www.weltkunst.de) -
@@ -658,6 +712,7 @@ Grouped in options:\
 [Berliner Morgenpost](https://www.morgenpost.de) -
 [Braunschweiger Zeitung](https://www.braunschweiger-zeitung.de) -
 [Hamburger Abendblatt](https://www.abendblatt.de) -
+[Iserlohner Kreisanzeiger und Zeitung](https://www.ikz-online.de) -
 [Neue Ruhr Zeitung](https://www.nrz.de) -
 [Ostthüringer Zeitung](https://www.otz.de) -
 [Thüringer Allgemeine](https://www.thueringer-allgemeine.de) -
@@ -667,6 +722,10 @@ Grouped in options:\
 [Westfälische Rundschau](https://www.wr.de)\
 *[Haas Mediengruppe](https://www.haas-mediengruppe.de/marken)* sites like (opt-in to custom sites for unlisted)\
 [Mannheimer Morgen](https://www.mannheimer-morgen.de)\
+*Ippen.media* sites like (opt-in to custom sites for unlisted)\
+[Frankfurter Rundschau](https://www.fr.de) -
+[Münchner Merkur](https://www.merkur.de) -
+[Oberbayerisches Volksblatt](https://www.ovb-online.de)\
 *Landwirtschaftsverlag* sites like\
 [Profi.de](https://www.profi.de) -
 [Top Agrar](https://www.topagrar.com) -
@@ -679,13 +738,10 @@ Grouped in options:\
 [Märkische Allgemeine](https://www.maz-online.de) -
 [Neue Presse (Hannover)](https://www.neuepresse.de) -
 [Ostsee-Zeitung](https://www.ostsee-zeitung.de) -
-[RedaktionsNetzwerk Deutschland](https://www.rnd.de)\
+[RedaktionsNetzwerk Deutschland](https://www.rnd.de) -
+[Sächsische Zeitung](https://www.saechsische.de)\
 *[Media Group Westfalen](https://mgw.de/portfolio/tageszeitungen)* sites like (opt-in to custom sites for unlisted)\
 [Ruhr Nachrichten](https://www.ruhrnachrichten.de)\
-*Medienholding Süd* sites like (opt-in to custom sites for unlisted)\
-[Schwarzwälder Bote](https://www.schwarzwaelder-bote.de) -
-[Stuttgarter Nachrichten](https://www.stuttgarter-nachrichten.de) -
-[Stuttgarter Zeitung](https://www.stuttgarter-zeitung.de)\
 *[Motor Presse Stuttgart](https://www.motorpresse.de)* sites like\
 [Aerokurier](https://www.aerokurier.de) -
 [Auto Motor und Sport](https://www.auto-motor-und-sport.de) -
@@ -694,33 +750,42 @@ Grouped in options:\
 [Women's Health](https://www.womenshealth.de)\
 *NOZ/MHN Mediengruppe* sites like\
 [Neue Osnabrücker Zeitung](https://www.noz.de) -
-[Schleswig-Holsteinischer Zeitungsverlag](https://www.shz.de) -
-[Schweriner Volkszeitung](https://www.svz.de)\
-*OVB Media* sites like (opt-in to custom sites for ovb24.de news portals)\
-[Oberbayerisches Volksblatt](https://www.ovb-online.de)\
+[Schleswig-Holsteinischer Zeitungsverlag](https://www.shz.de)\
+Rheinische Post Mediengruppe like\
+[General-Anzeiger Bonn](https://ga.de) -
+[Rheinische Post](https://rp-online.de) -
+[Saarbrücker Zeitung](https://www.saarbruecker-zeitung.de) -
+[Trierischer Volksfreund](https://www.volksfreund.de)\
 *Verlagsgruppe Rhein Main* sites like (opt-in to custom sites for unlisted)\
 [Allgemeine Zeitung (Mainz)](https://www.allgemeine-zeitung.de) -
 [Darmstädter Echo](https://www.echo-online.de) -
 [Wiesbadener Kurier](https://www.wiesbadener-kurier.de)
+
+##### Greece
+[Kathimerini](https://www.kathimerini.gr)
 
 ##### Italy
 [Corriere della Sera](https://www.corriere.it) -
 [Corriere dello Sport](https://www.corrieredellosport.it) -
 [Domani](https://editorialedomani.it) -
 [Eastwest](https://eastwest.eu) -
-[Il Fatto Quotidiano](https://www.ilfattoquotidiano.it) -
+[Il Fatto Quotidiano](https://www.ilfattoquotidiano.it)* -
 [Il Foglio](https://www.ilfoglio.it) -
 [Il Manifesto](https://ilmanifesto.it) -
 [Il Sole 24 Ore (24+)](https://24plus.ilsole24ore.com) -
 [Internazionale](https://www.internazionale.it) -
 [Italia Oggi](https://www.italiaoggi.it) -
 [La Gazzetta dello Sport](https://www.gazzetta.it) -
+[Milano Finanza](https://www.milanofinanza.it) -
+[Sky Sport](https://sport.sky.it) -
+[Sky TG24](https://tg24.sky.it) -
 [Tuttosport](https://www.tuttosport.com)
 
 Grouped in options:\
 *Gruppo GEDI.it* sites like\
 [Huffingtonpost.it](https://www.huffingtonpost.it) -
 [Italian.tech](https://www.italian.tech) -
+[La Repubblica](https://www.repubblica.it) -
 [La Stampa](https://www.lastampa.it) -
 [Le Scienze](https://www.lescienze.it) -
 [Moda & Beauty](https://www.moda.it)
@@ -746,10 +811,10 @@ Grouped in options:\
 [Business Insider Nederland](https://www.businessinsider.nl) -
 [De Tijd](https://www.tijd.be) -
 [Doorbraak](https://doorbraak.be) -
-[Financieele Dagblad](https://fd.nl) -
 [Follow the Money](https://www.ftm.nl) -
 [Groene Amsterdammer](https://www.groene.nl) -
 [Het Laatste Nieuws](https://www.hln.be) -
+[Linda](https://www.linda.nl) -
 [NRC Handelsblad](https://www.nrc.nl) -
 [Telegraaf](https://www.telegraaf.nl) -
 [Vrij Nederland](https://www.vn.nl)
@@ -773,12 +838,16 @@ Grouped in options:\
 [Margriet](https://www.margriet.nl) -
 [Parool](https://www.parool.nl) -
 [Trouw](https://www.trouw.nl)\
-*Mediahuis Nederland Regional* sites like\
+*Mediahuis België* sites like\
+[De Standaard](https://www.standaard.be) -
+[Gazet van Antwerpen](https://www.gva.be) -
+[Het Belang van Limburg](https://www.hbvl.be) -
+[Het Nieuwsblad](https://www.nieuwsblad.be)\
+*Mediahuis Nederland Regional* sites like (opt-in to custom sites for unlisted)\
+[De Limburger](https://www.limburger.nl) -
 [Noordhollands Dagblad](https://www.noordhollandsdagblad.nl) -
 [Haarlems Dagblad](https://www.haarlemsdagblad.nl) -
-[Leidsch Dagblad](https://www.leidschdagblad.nl) -
-[IJmuider Courant](https://www.ijmuidercourant.nl) -
-[De Gooi- en Eemlander](https://www.gooieneemlander.nl)\
+[Leidsch Dagblad](https://www.leidschdagblad.nl)\
 *Mediahuis Noord* sites like (opt-in to custom sites for unlisted)\
 [Dagblad van het Noorden](https://www.dvhn.nl) -
 [Leeuwarder Courant](https://www.lc.nl)\
@@ -792,11 +861,14 @@ Grouped in options:\
 [Libelle.be](https://www.libelle.be)
 
 ##### Norway
+[Bergens Tidende](https://www.bt.no) -
 [Dagsavisen](https://www.dagsavisen.no)\
 Grouped in options:\
-*NHST Media Group* sites like\
+*DN Media Group* sites like\
+[DN](https://www.dn.no) -
 [Europower](https://www.europower.no) -
 [Fiskeribladet](https://www.fiskeribladet.no) -
+[Hydrogen Insight](https://www.hydrogeninsight.com) -
 [Intrafish](https://www.intrafish.com) -
 [Intrafish.no](https://www.intrafish.no) -
 [Recharge](https://www.rechargenews.com) -
@@ -805,35 +877,45 @@ Grouped in options:\
 
 ##### Poland
 [Polityka](https://www.polityka.pl) -
-[Rzeczpospolita](https://www.rp.pl)
+[Puls Biznesu](https://www.pb.pl)
 
 Grouped in options:\
+*GremiMedia.pl Group* sites like\
+[Parkiet](https://www.parkiet.com) -
+[Rzeczpospolita](https://www.rp.pl)\
 *Ringier Axel Springer Polska* sites like\
 [Auto Swiat](https://www.auto-swiat.pl) -
 [Business Insider](https://businessinsider.com.pl) -
 [Forbes](https://www.forbes.pl) -
 [Komputer Swiat](https://www.komputerswiat.pl) -
 [Newsweek](https://www.newsweek.pl) -
-[Onet](https://www.onet.pl)
+[Onet](https://www.onet.pl)\
+*Wyborcza Group* sites like\
+[Magazyn-kuchnia.pl](https://magazyn-kuchnia.pl) -
+[Wyborcza.biz](https://wyborcza.biz) -
+[Wyborcza.pl](https://wyborcza.pl) -
+[Wysokieobcasy.pl](https://www.wysokieobcasy.pl)
 
 ##### Portugal
-[Correio da Manhã](https://www.cmjornal.pt) -
+[Diário de Notícias](https://www.dn.pt) -
 [Expresso](https://expresso.pt) -
 [Observador](https://observador.pt) -
-[Record](https://www.record.pt) -
 [Sábado](https://www.sabado.pt)
 
 ##### Russia
 [Wonderzine](https://www.wonderzine.com)
 
 ##### Spain
+[Diario de Navarra](https://www.diariodenavarra.es) -
 [El Confidencial](https://www.elconfidencial.com) -
 [El Diario.es](https://www.eldiario.es) -
 [El Español](https://www.elespanol.com) -
 [El País](https://elpais.com) -
+[InfoLibre](https://www.infolibre.es) -
 [La Vanguardia](https://www.lavanguardia.com) -
 [Mundo Deportivo](https://www.mundodeportivo.com) -
-[Política Exterior](https://www.politicaexterior.com)
+[Política Exterior](https://www.politicaexterior.com) -
+[Público](https://www.publico.es)
 
 Grouped in options:\
 *ARA* sites like\
@@ -875,11 +957,14 @@ Grouped in options:\
 
 ##### Sweden
 [Dagens ETC](https://www.etc.se) -
-[Dagens Industri](https://www.di.se) -
-[Dagens Medicin](https://www.dagensmedicin.se) -
 [NyTeknik](https://www.nyteknik.se)
 
 Grouped in options:\
+*Bonnier News Group* sites like (opt-in to custom sites for unlisted)\
+[Dagens Medicin](https://www.dagensmedicin.se) -
+[Dagens Nyheter](https://www.dn.se) -
+[Helsingborgs Dagblad](https://www.hd.se) -
+[Sydsvenskan](https://www.sydsvenskan.se)\
 *[NWT Media](https://www.nwtmedia.se)* sites (opt-in to custom sites)
 
 ##### Switzerland
@@ -892,19 +977,40 @@ Grouped in options:\
 [Aargauer Zeitung](https://www.aargauerzeitung.ch) -
 [Luzerner Zeitung](https://www.luzernerzeitung.ch) -
 [St. Galler Tagblatt](https://www.tagblatt.ch)\
-*Ringier Gruppe* sites like\
-[Blick](https://www.blick.ch) -
-[Beobachter](https://www.beobachter.ch) -
-[Handelszeitung](https://www.handelszeitung.ch)
-
-Grouped in options:\
 *[Groupe ESH Médias](https://www.eshmedias.ch)* sites like\
 [ArcInfo](https://www.arcinfo.ch) -
 [La Côte](https://www.lacote.ch) -
-[Le Nouvelliste](https://www.lenouvelliste.ch)
+[Le Nouvelliste](https://www.lenouvelliste.ch)\
+*Ringier Gruppe* sites like\
+[Blick](https://www.blick.ch) -
+[Beobachter](https://www.beobachter.ch) -
+[Handelszeitung](https://www.handelszeitung.ch)\
+*[TAmedia](https://www.tamedia.ch/de/medien)* sites like (opt-in to custom sites for unlisted)\
+[24 heures](https://www.24heures.ch) -
+[Basler Zeitung](https://www.bazonline.ch) -
+[Berner Zeitung](https://www.bernerzeitung.ch) -
+[Der Bund](https://www.derbund.ch) -
+[Tages-Anzeiger](https://www.tagesanzeiger.ch) -
+[Tribune de Genève](https://www.tdg.ch)
+
+##### Ukraine
+[Forbes](https://forbes.ua) -
+[New Voice](https://nv.ua)
+
+#### Africa
+
+###### Kenya
+
+[The Standard](https://www.standardmedia.co.ke)
+
+Grouped in options:\
+*[Nation Media Group](https://www.nationmedia.com/brands)* sites like (opt-in to custom sites for unlisted)\
+[Business Daily](https://www.businessdailyafrica.com) -
+[Daily Nation](https://nation.africa)
 
 ##### Australia/New Zealand
 
+[BusinessDesk](https://businessdesk.co.nz) -
 [Forbes Australia](https://www.forbes.com.au) -
 [Inkl](https://www.inkl.com) -
 [MacroBusiness](https://www.macrobusiness.com.au) -
@@ -920,7 +1026,6 @@ Grouped in options:\
 [Geelong Advertiser](https://www.geelongadvertiser.com.au) -
 [Gold Coast Bulletin](https://www.goldcoastbulletin.com.au) -
 [Herald Sun](https://www.heraldsun.com.au) -
-[Northern Territory News](https://www.ntnews.com.au) -
 [The Advertiser/AdelaideNow](https://www.adelaidenow.com.au) -
 [The Australian](https://www.theaustralian.com.au) -
 [The Chronicle](https://www.thechronicle.com.au) -
@@ -956,24 +1061,26 @@ Grouped in options:\
 *[McPherson Media Group](https://www.mmg.com.au/portfolio)* sites (opt-in to custom sites)\
 *[Private Media](https://www.privatemedia.com.au)* sites like\
 [Crikey](https://www.crikey.com.au) -
-[Inc. Australia](https://www.inc-aus.com) -
 [Smart Company](https://www.smartcompany.com.au) -
 [The Mandarin](https://www.themandarin.com.au)
 
 ##### China, Hong Kong & Taiwan
 [CommonWealth Magazine Taiwan](https://www.cw.com.tw)* -
 [DigiTimes Asia](https://www.digitimes.com) -
-[South China Morning Post](https://www.scmp.com)
+[South China Morning Post](https://www.scmp.com) -
+[Southern Weekly](https://www.infzm.com) -
+[The News Lens](https://www.thenewslens.com)
 
 ##### India
 [Bar and Bench](https://www.barandbench.com) -
+[Bhaskar](https://www.bhaskar.com) -
 [Business Standard](https://www.business-standard.com) -
-[Hindu Tamil Thisai](https://www.hindutamil.in) -
 [Hindustan Times](https://www.hindustantimes.com) -
 [Inc42](https://inc42.com) -
 [India Today](https://www.indiatoday.in) -
 [Live Law](https://www.livelaw.in) -
 [LiveMint](https://www.livemint.com) -
+[Malayala Manorama](https://www.manoramaonline.com) -
 [Mid-Day](https://www.mid-day.com) -
 [Newslaundry](https://www.newslaundry.com) -
 [NDTV Profit](https://www.ndtvprofit.com) -
@@ -985,13 +1092,15 @@ Grouped in options:\
 [The Hindu](https://www.thehindu.com) -
 [The Hindu BusinessLine](https://www.thehindubusinessline.com) -
 [The Indian Express](https://indianexpress.com) -
+[The Leaflet](https://theleaflet.in) -
 [The News Minute](https://www.thenewsminute.com) -
 [The Quint](https://www.thequint.com) -
 [Times of India](https://timesofindia.indiatimes.com) -
 [Vikatan](https://www.vikatan.com)
 
 ##### Indonesia
-[Kompas](https://www.kompas.id)
+[Kompas](https://www.kompas.id) -
+[Tempo](https://www.tempo.co)
 
 ##### Israel
 [Globes](https://www.globes.co.il) -
@@ -1005,15 +1114,17 @@ Grouped in options:\
 [The Marker](https://www.themarker.com)
 
 ##### Japan
+[Business Insider Japan](https://www.businessinsider.jp) -
 [Mainichi Shimbun](https://mainichi.jp) -
 [Nikkei Asian Review](https://asia.nikkei.com) -
 [The Japan Times](https://www.japantimes.co.jp)
 
 ##### Singapore
-[DealStreetAsia](https://www.dealstreetasia.com) -
+[Initium Media](https://theinitium.com) -
 [Tech in Asia](https://www.techinasia.com)\
 Grouped in options:\
 *SPH Media* sites like\
+[The Business Times](https://www.businesstimes.com.sg) -
 [The Straits Times](https://www.straitstimes.com)
 
 #### Latin America
@@ -1022,15 +1133,21 @@ Grouped in options:\
 [Ámbito](https://www.ambito.com) -
 [El Cronista](https://www.cronista.com) -
 [El Tribuno](https://www.eltribuno.com) -
+[La Gaceta](https://www.lagaceta.com.ar) -
 [La Nación](https://www.lanacion.com.ar)*
 
 Grouped in options:\
 *Grupo Clarín* sites like\
 [Clarín](https://www.clarin.com) -
 [La Voz del Interior](https://www.lavoz.com.ar) -
-[Los Andes](https://www.losandes.com.ar)
+[Los Andes](https://www.losandes.com.ar) -
+[Olé](https://www.ole.com.ar)
+
+##### Bolivia
+[El Deber](https://eldeber.com.bo)
 
 ##### Brazil
+[ABC Mais](https://www.abcmais.com) -
 [CartaCapital](https://www.cartacapital.com.br) -
 [Correio do Povo](https://www.correiodopovo.com.br) -
 [Crusoé](https://crusoe.com.br) -
@@ -1039,6 +1156,8 @@ Grouped in options:\
 [GaúchaZH](https://gauchazh.clicrbs.com.br) -
 [Gazeta do Povo](https://www.gazetadopovo.com.br) -
 [Grupo Abril](https://grupoabril.com.br) -
+[Le Monde Diplomatique Brasil](https://diplomatique.org.br) -
+[NSC Total](https://www.nsctotal.com.br) -
 [O Estado de S. Paulo](https://estadao.com.br) -
 [O Globo](https://oglobo.globo.com) -
 [Revista Oeste](https://revistaoeste.com) -
@@ -1051,14 +1170,16 @@ Grouped in options:\
 
 ##### Chile
 [Diario Financiero](https://www.df.cl) -
-[El Mercurio (+ regional/opt-in to custom sites)](https://digital.elmercurio.com) -
-[La Segunda](https://digital.lasegunda.com) -
+[El Mercurio](https://digital.elmercurio.com) -
 [La Tercera](https://www.latercera.com)
 ##### Colombia
 [Cambio Colombia](https://cambiocolombia.com) -
 [El Espectador](https://www.elespectador.com) -
 [El Tiempo](https://www.eltiempo.com)
+##### Ecuador
+[El Universo](https://www.eluniverso.com)
 ##### Mexico
+[El Universal](https://www.eluniversal.com.mx) -
 [Mexico News Daily](https://mexiconewsdaily.com)
 ##### Peru
 *Grupo El Comercio* sites like\
@@ -1080,17 +1201,15 @@ Click on the BPC-icon and then *clear cookies*-button in the popup (for unsuppor
 If removing the cookies works you can also add the site as a custom site.
 
 ### New site requests
-You can [submit a request for a new website](https://github.com/bpc-clone/bypass-paywalls-chrome-clean/issues)  
+You can [submit a request for a new website](https://github.com/bpc-clone/bpc_chrome_support/issues)  
 Please use the issue template, read the following instructions and share your results for a quicker process.  
 Remember to check the previous requests before asking for a new website.
-1. Open incognito window and search for article in Google search (or webcache).
+1. Open incognito window.
 2. Clear cookies for the site (by this extension: opt-in to custom sites or grant host permission for the site; also enables blocking of general paywall scripts).
-3. Disable Javascript on the site (by browser, uBlock Origin or other extension).
+3. Disable JavaScript on the site (by browser, uBlock Origin or other extension).
 4. Add the domain as custom site for more bypass options.
 5. Open page in reader view (by browser or extension).
-6. Try one of the archive sites:
-* archive.is/today will not work with Secured DNS by Cloudflare (or when you change referer/user-agent for the archive site)
-* for Google Search Tool test url & copy html (tab) code to https://codebeautify.org/htmlviewer
+6. Try one of the archive sites.
 
 ### Add custom site
 Add your own custom site/group (for group use comma-separated list; set domain like group_...).  
@@ -1103,26 +1222,26 @@ Additional custom options:
 * allow/remove cookies (no options selected: cookies are blocked)
 * set useragent to Googlebot, Bingbot, Facebookbot or custom
 * set referer (to Facebook, Google, Twitter or custom; ignored when Googlebot is set)
-* set random ip-address
-* disable Javascript for (sub)domain(s), external domains (when host permission) and/or inline scripts
+* set random ip-address (header X-Forwarded-For)
+* disable JavaScript for (sub)domain(s), external domains (when host permission) and/or inline scripts
 * block regular expression (to block specific script and/or xhr)
-* block_host_perm_add: add additinal host permission(s) for blocked content
+* block_host_perm_add: add additional host permission(s) for blocked content
 * unhide text amp-page
 * redirect to amp-page when paywall(selector)
 * load text from json when paywall|article(selector)
-* load text from archive.is or Google webcache when paywall|article(selector)
+* load text from archive.is when paywall|article(selector)
 * add external link to archive-site when paywall|article(selector)
 * remove/unhide elements in dom (optional for dev; check examples)
 
-[Download example list of custom sites](https://github.com/bpc-clone/bypass-paywalls-chrome-clean/raw/master/custom/sites_custom.json)
+[Download example list of custom sites](https://gitflic.ru/project/magnolia1234/bpc_updates/blob/raw?file=sites_custom.json)
 
 ### Add excluded site
 Add excluded sites/domains (for your subscriptions).\
 You can also exclude a specific domain which is grouped in options.
 
 ### Changelog-releases
-* Visit the changelog page: [local](changelog.txt) or [online](https://github.com/bpc-clone/bypass-paywalls-chrome-clean/raw/master/changelog.txt)
-* Download the latest version from [GitHub](https://github.com/bpc-clone/bpc_updates/releases/latest)
+* Visit the changelog page: [local](changelog.txt) or [online](https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean/blob/raw?file=changelog.txt)
+* Download the latest version from [GitFlic](https://gitflic.ru/project/magnolia1234/bpc_uploads)
 
 ### License
 * Bypass Paywalls Clean is [MIT-licensed](LICENSE.txt).

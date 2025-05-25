@@ -1,69 +1,95 @@
 {
-  "Dagens Medicin": {
-    "domain": "dagensmedicin.se",
+  "Bloomberg Adria": {
+    "domain": "bloombergadria.com",
     "allow_cookies": 1,
-    "useragent": "googlebot",
-    "upd_version": "3.6.9.3"
+    "block_js_inline": "\\.bloombergadria\\.com\\/.+\\/news",
+    "upd_version": "4.1.3.3"
   },
-  "Financial News (London)": {
-    "domain": "fnlondon.com",
+  "Business Post.ie": {
+    "domain": "businesspost.ie",
     "allow_cookies": 1,
-    "block_regex": "cdn\\.cxense\\.com",
-    "ld_archive_is": "div[data-testid='articleSignInSubscribeWrapper']|article",
-    "upd_version": "3.6.8.6"
+    "block_regex": "\\.businesspost\\.ie\\/api\\/tinypass\\.min\\.js",
+    "add_ext_link": "div#bp_piano_article_subscription_offer|div.article-content",
+    "add_ext_link_type": "archive.is",
+    "upd_version": "4.1.2.6"
   },
-  "Grupo Clarín": {
-    "domain": "###_ar_grupo_clarin",
+  "Grupo Unidad Editorial": {
+    "domain": "###_es_unidad",
     "group": [
-      "clarin.com",
-      "lavoz.com.ar",
-      "losandes.com.ar"
+      "elmundo.es",
+      "expansion.com",
+      "marca.com"
     ],
     "allow_cookies": 1,
-    "block_regex": "\\.clarin\\.com\\/.+\\/(meter|zonda-).*\\.js",
+    "block_regex": "(\\.tinypass\\.com\\/|\\.ampproject\\.org\\/v0\\/amp-(access|subscriptions)-.+\\.js)",
+    "amp_redirect": "div[class^='ue-c-article__premium']",
+    "amp_unhide": 1,
+    "upd_version": "4.1.2.4"
+  },
+  "Grupo Vocento": {
+    "domain": "###_es_grupo_vocento",
+    "group": [
+      "abc.es",
+      "canarias7.es",
+      "diariosur.es",
+      "diariovasco.com",
+      "elcomercio.es",
+      "elcorreo.com",
+      "eldiariomontanes.es",
+      "elnortedecastilla.es",
+      "hoy.es",
+      "ideal.es",
+      "larioja.com",
+      "lasprovincias.es",
+      "laverdad.es",
+      "lavozdigital.es"
+    ],
+    "allow_cookies": 1,
+    "block_regex": "\\.ampproject\\.org\\/v0\\/amp-access-.+\\.js",
     "exception": [{
-        "domain": "lavoz.com.ar",
+        "domain": "abc.es",
         "allow_cookies": 1,
-        "block_regex": "cdn\\.wyleex\\.com\\/lavoz\\/pw\\.min\\.js"
-      }, {
-        "domain": "losandes.com.ar",
-        "allow_cookies": 1,
-        "block_regex": "cdn\\.lavoz\\.com\\.ar\\/sites\\/.+\\/paywall\\/losandes\\/pw\\.js"
+        "cs_block": 1,
+        "ld_json": "div.voc-paywall|p.voc-p"
       }
     ],
-    "upd_version": "3.6.8.1"
+    "upd_version": "4.1.2.7"
   },
-  "Mediahuis Nederland Regional": {
-    "domain": "###_nl_mediahuis_region",
+  "Hindustan Times": {
+    "domain": "hindustantimes.com",
+    "allow_cookies": 1,
+    "block_regex": "\\.ampproject\\.org\\/v0\\/amp-access-.+\\.js",
+    "cs_code": "[{\"cond\":\".freemiumText\", \"rm_class\":\"freemiumText\"}]",
+    "upd_version": "4.1.2.9"
+  },
+  "Media Group Westfalen": {
+    "domain": "###_de_mgw",
     "group": [
-      "gooieneemlander.nl",
-      "haarlemsdagblad.nl",
-      "ijmuidercourant.nl",
-      "leidschdagblad.nl",
-      "noordhollandsdagblad.nl"
+      "ruhrnachrichten.de"
     ],
     "allow_cookies": 1,
-    "ld_archive_is": "div[data-auth-root='paywall']|div[data-mht-block='article-detail__article-main']|div[id$='article-main']",
-    "upd_version": "3.6.8.2"
+    "block_regex": "\\.tinypass\\.com",
+    "cs_block": 1,
+    "ld_archive_is": "header>h2>span.plus-icon|div#premium-content",
+    "upd_version": "4.1.2.1"
   },
-  "Private Equity News (removed)": {
-    "domain": "penews.com",
+  "NSC Total": {
+    "domain": "nsctotal.com.br",
     "allow_cookies": 1,
-    "nofix": 1,
-    "upd_version": "3.6.9.3"
+    "block_regex": "\\.nsctotal\\.com\\.br\\/wp-content\\/themes\\/nsctotal\\/js\\/paywall\\.min\\.js",
+    "upd_version": "4.1.2.6"
   },
-  "Scholastic": {
-    "domain": "scholastic.com",
+  "The Business Journals": {
+    "domain": "bizjournals.com",
     "allow_cookies": 1,
-    "cs_code": "[{\"cond\":\"div.paywallModalElement\", \"rm_elem\":1, \"elems\":[{\"cond\":\"body.modal-open\", \"rm_attrib\":\"class\"}, {\"cond\":\"div.modal-backdrop\", \"rm_elem\":1}]}]",
-    "upd_version": "3.6.9.2"
-  },
-  "The New York Times": {
-    "domain": "nytimes.com",
-    "allow_cookies": 1,
-    "block_regex": "(\\.nytimes\\.com\\/meter\\.js|mwcm\\.nyt\\.com\\/.+\\.js|cooking\\.nytimes\\.com\\/api\\/.+\\/access)",
+    "block_regex": "\\.cxense\\.com",
     "useragent": "googlebot",
-	"cs_code": "[{\"cond\":\"DIV[id^='slideup-']\", \"rm_elem_wait\":1}, {\"cond\":\"div[id*='overlay']\", \"rm_elem\":1}, {\"cond\":\"body\", \"set_attrib\":\"style|overflow:visible;position:relative\"}]",
-    "upd_version": "3.6.8.3"
+    "upd_version": "4.1.2.5"
+  },
+  "The Irish Examiner": {
+    "domain": "irishexaminer.com",
+    "allow_cookies": 1,
+    "useragent": "googlebot",
+    "upd_version": "4.1.2.8"
   }
 }

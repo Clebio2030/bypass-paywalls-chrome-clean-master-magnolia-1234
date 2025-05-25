@@ -31,6 +31,9 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 To remove this message you'll have to remove the added policy from the registry again (run regedit and for Chrome check HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome).</p>
     <p>If you still want to add the extension to the allowlist:</p>
     <p>Run as administrator one of the reg-files in allowlist-folder of extension (unzip).</p>
+    <ul>
+      <li>for Edge 116+ you may also need to run the <em>Forcelist</em> reg-file (also undo reg-file provided) or switch to <em>Load unpacked</em> installation.</li>
+    </ul>
     <p>If you already added extensions to the allowlist than you should change "1" to a new value (also change name of HLM-key for beta/developer versions of browsers).<br />
 To add more extensions to the allowlist you can add more lines.<br />
 Example Chrome-regfile:</p>

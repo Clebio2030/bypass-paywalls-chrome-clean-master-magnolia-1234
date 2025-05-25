@@ -3,13 +3,12 @@ var url_loc = (typeof browser === 'object') ? 'firefox' : 'chrome';
 var manifestData = ext_api.runtime.getManifest();
 var navigator_ua = navigator.userAgent;
 var navigator_ua_mobile = navigator_ua.toLowerCase().includes('mobile');
-var yandex_browser = navigator_ua_mobile && (url_loc === 'chrome') && navigator_ua.toLowerCase().includes('yabrowser');
-var custom_switch = ((manifestData.optional_permissions && manifestData.optional_permissions.length) || (manifestData.optional_host_permissions && manifestData.optional_host_permissions.length)) && !(navigator_ua_mobile && (url_loc === 'chrome') && !yandex_browser);
+var custom_switch = ((manifestData.optional_permissions && manifestData.optional_permissions.length) || (manifestData.optional_host_permissions && manifestData.optional_host_permissions.length));
 
 var useragent_options = ['', 'googlebot', 'bingbot', 'facebookbot'];
 var referer_options = ['', 'facebook', 'google', 'twitter'];
 var random_ip_options = ['', 'all', 'eu'];
-var add_ext_link_type_options = ['', 'archive.is', 'google_webcache', 'google_search_tool'];
+var add_ext_link_type_options = ['', 'archive.is', 'google_search_tool'];
 
 function capitalize(str) {
   return (typeof str === 'string') ? str.charAt(0).toUpperCase() + str.slice(1) : '';
@@ -120,11 +119,15 @@ function import_json(result) {
   });
 }
 
+function randomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 // Import custom sites from local/online
 function import_url_options(e, online) {
   let url = '/custom/sites_custom.json';
   if (online)
-    url = 'https://gitflic.ru/project/magnolia1234/bpc_updates/blob/raw?file=sites_custom.json';
+    url = 'https://gitflic.ru/project/magnolia1234/bpc_updates/blob/raw?file=sites_custom.json'  + '&rel=' + randomInt(100000);
   try {
     fetch(url)
     .then(response => {
@@ -289,9 +292,9 @@ function edit_options() {
     document.querySelector('input[data-key="amp_redirect"]').value = edit_site.amp_redirect || '';
     document.querySelector('input[data-key="ld_json"]').value = edit_site.ld_json || '';
     document.querySelector('input[data-key="ld_json_next"]').value = edit_site.ld_json_next || '';
+    document.querySelector('input[data-key="ld_json_source"]').value = edit_site.ld_json_source || '';
     document.querySelector('input[data-key="ld_json_url"]').value = edit_site.ld_json_url || '';
     document.querySelector('input[data-key="ld_archive_is"]').value = edit_site.ld_archive_is || '';
-    document.querySelector('input[data-key="ld_google_webcache"]').value = edit_site.ld_google_webcache || '';
     document.querySelector('input[data-key="add_ext_link"]').value = edit_site.add_ext_link || '';
     document.querySelector('select[data-key="add_ext_link_type"]').selectedIndex = add_ext_link_type_options.indexOf(edit_site.add_ext_link_type);
     document.querySelector('textarea[data-key="cs_code"]').value = edit_site.cs_code || '';
@@ -329,7 +332,8 @@ var perm_origins;
 function renderOptions() {
   ext_api.storage.local.get({
     sites_custom: {},
-    sites_updated: {}
+    sites_updated: {},
+    sites_custom_upd_version: ''
   }, function (items) {
     var sites_custom = sortJson(items.sites_custom);
     var sites_custom_domains_new = Object.values(sites_custom).filter(x => x.domain && !defaultSites_domains.includes(x.domain)).map(x => x.group ? x.group.split(',').filter(x => x).map(x => x.trim()) : x.domain).flat();
@@ -374,9 +378,9 @@ function renderOptions() {
       'amp_redirect': 0,
       'ld_json': 0,
       'ld_json_next': 0,
+      'ld_json_source': 0,
       'ld_json_url': 0,
       'ld_archive_is': 0,
-      'ld_google_webcache': 0,
       'add_ext_link': 0,
       'add_ext_link_type': 0,
       'cs_code': 0,
@@ -404,11 +408,11 @@ function renderOptions() {
         } else {
           if (!['cs_code', 'group', 'referer_custom', 'useragent_custom'].includes(key)) {
             inputEl = document.createElement('input');
-            inputEl.size = 25;
+            inputEl.size = 35;
           } else {
             inputEl = document.createElement('textarea');
             inputEl.rows = 5;
-            inputEl.cols = 25;
+            inputEl.cols = 35;
           }
           let placeholders = {
             title: 'Example',
@@ -417,12 +421,12 @@ function renderOptions() {
             block_js_inline: '\\.example\\.com\\/article\\/',
             block_regex: '\\.example\\.com\\/js\\/',
             block_host_perm_add: 'example1.com,example2.com',
-            amp_redirect: 'div.paywall',
+            amp_redirect: 'div.paywall|amp_url',
             ld_json: 'div.paywall|div.article',
             ld_json_next: 'div.paywall|div.article',
+            ld_json_source: 'div.paywall|div.article|filter|json_key',
             ld_json_url: 'div.paywall|div.article',
             ld_archive_is: 'div.paywall|div.art|div.art_src|div.art_link',
-            ld_google_webcache: 'div.paywall|div.article',
             add_ext_link: 'div.paywall|div.article',
             cs_code: 'for dev: check imported examples',
           };
@@ -454,28 +458,31 @@ function renderOptions() {
       
       let isDefaultSite = defaultSites_domains.includes(domain);
       optionEl.text = isDefaultSite ? '*' : '';
-      optionEl.text += key + ': ' + domain +
-      (sites_custom[key]['allow_cookies'] > 0 ? ' | allow_cookies' : '') +
-      (sites_custom[key]['remove_cookies'] > 0 ? ' | remove_cookies' : '') +
-      (sites_custom[key]['useragent'] ? ' | useragent: ' + sites_custom[key]['useragent'] : '') +
-      (sites_custom[key]['useragent_custom'] ? ' | useragent_custom' : '') +
-      (sites_custom[key]['googlebot'] > 0 ? ' | googlebot' : '') +
-      (sites_custom[key]['referer'] ? ' | referer: ' + sites_custom[key]['referer'] : '') +
-      (sites_custom[key]['referer_custom'] ? ' | referer_custom' : '') +
-      (sites_custom[key]['random_ip'] ? ' | random_ip: ' + sites_custom[key]['random_ip'] : '') +
-      ((sites_custom[key]['block_js'] > 0) ? ' | block_js' : '') +
-      ((sites_custom[key]['block_js_ext'] > 0) ? ' | block_js_ext' : '') +
-      (sites_custom[key]['block_js_inline'] ? ' | block_js_inline' : '') +
-      (sites_custom[key]['block_regex'] ? ' | block_regex' : '') +
-      (sites_custom[key]['amp_unhide'] > 0 ? ' | amp_unhide' : '') +
-      (sites_custom[key]['amp_redirect'] ? ' | amp_redirect' : '') +
-      (sites_custom[key]['ld_json'] ? ' | ld_json' : '') +
-      (sites_custom[key]['ld_json_next'] ? ' | ld_json_next' : '') +
-      (sites_custom[key]['ld_json_url'] ? ' | ld_json_url' : '') +
-      (sites_custom[key]['ld_archive_is'] ? ' | ld_archive_is' : '') +
-      (sites_custom[key]['ld_google_webcache'] ? ' | ld_google_webcache' : '') +
-      (sites_custom[key]['add_ext_link'] && sites_custom[key]['add_ext_link_type'] ? ' | add_ext_link' : '') +
-      (sites_custom[key]['cs_code'] ? ' | cs_code' : '');
+      optionEl.text += key;
+      if (!navigator_ua_mobile) {
+        optionEl.text += ': ' + domain +
+        (sites_custom[key]['allow_cookies'] > 0 ? ' | allow_cookies' : '') +
+        (sites_custom[key]['remove_cookies'] > 0 ? ' | remove_cookies' : '') +
+        (sites_custom[key]['useragent'] ? ' | useragent: ' + sites_custom[key]['useragent'] : '') +
+        (sites_custom[key]['useragent_custom'] ? ' | useragent_custom' : '') +
+        (sites_custom[key]['googlebot'] > 0 ? ' | googlebot' : '') +
+        (sites_custom[key]['referer'] ? ' | referer: ' + sites_custom[key]['referer'] : '') +
+        (sites_custom[key]['referer_custom'] ? ' | referer_custom' : '') +
+        (sites_custom[key]['random_ip'] ? ' | random_ip: ' + sites_custom[key]['random_ip'] : '') +
+        ((sites_custom[key]['block_js'] > 0) ? ' | block_js' : '') +
+        ((sites_custom[key]['block_js_ext'] > 0) ? ' | block_js_ext' : '') +
+        (sites_custom[key]['block_js_inline'] ? ' | block_js_inline' : '') +
+        (sites_custom[key]['block_regex'] ? ' | block_regex' : '') +
+        (sites_custom[key]['amp_unhide'] > 0 ? ' | amp_unhide' : '') +
+        (sites_custom[key]['amp_redirect'] ? ' | amp_redirect' : '') +
+        (sites_custom[key]['ld_json'] ? ' | ld_json' : '') +
+        (sites_custom[key]['ld_json_next'] ? ' | ld_json_next' : '') +
+        (sites_custom[key]['ld_json_source'] ? ' | ld_json_source' : '') +
+        (sites_custom[key]['ld_json_url'] ? ' | ld_json_url' : '') +
+        (sites_custom[key]['ld_archive_is'] ? ' | ld_archive_is' : '') +
+        (sites_custom[key]['add_ext_link'] && sites_custom[key]['add_ext_link_type'] ? ' | add_ext_link' : '') +
+        (sites_custom[key]['cs_code'] ? ' | cs_code' : '');
+      }
       optionEl.value = key;
       selectEl.add(optionEl);
     }
@@ -500,6 +507,19 @@ function renderOptions() {
         perm_custom.innerText = 'NO';
       }
     });
+
+    var sites_custom_upd_version = items.sites_custom_upd_version;
+    if (sites_custom['###_remove_sites'] && sites_custom['###_remove_sites'].cs_code) {
+      let custom_version = '';
+      let match = sites_custom['###_remove_sites'].cs_code.split(/,\s?/).filter(x => x.match(/^###_custom_/));
+      if (match.length)
+        custom_version = match[0].replace('###_custom_', '');
+      if (custom_version < sites_custom_upd_version) {
+        var custom_update = document.getElementById('custom-update');
+        custom_update.style = 'font-weight: bold; color: red; margin: 20px 0px;';
+        custom_update.innerText = 'Custom sites updated (import from local/online)!\r\n';
+      }
+    }
   });
   
   var custom_enabled = document.getElementById('custom-enabled');

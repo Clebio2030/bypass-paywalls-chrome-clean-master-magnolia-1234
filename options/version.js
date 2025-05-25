@@ -2,7 +2,7 @@ var ext_api = (typeof browser === 'object') ? browser : chrome;
 
 var manifestData = ext_api.runtime.getManifest();
 var url_loc = manifestData.key ? 'chrome' : 'firefox';
-var ext_url = 'https://github.com/bpc-clone/bpc_updates/releases/latest';
+var ext_url = 'https://gitflic.ru/project/magnolia1234/bpc_uploads';
 var ext_name = manifestData.name;
 var version_str = 'v' + manifestData.version;
 var version_span = document.querySelector('span#version');

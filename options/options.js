@@ -56,6 +56,7 @@ function renderOptions() {
         perm_custom.innerText = '';
       } else {
         perm_custom.textContent = ">> check host (domain) permissions for custom/updated sites";
+        perm_custom.style.margin = '10px';
       }
     });
 
@@ -69,18 +70,24 @@ function renderOptions() {
       },
       "default": {
         sites: defaultSites,
+        title: '* Default settings',
         default_sites: true
       },
       "custom": {
         sites: sites_custom,
+        title: '* Custom (new) sites',
         default_sites: false
       }
     };
     for (let site_type in site_types) {
       labelEl = document.createElement('label');
       labelEl.setAttribute('style', ' font-weight: bold;');
-      if (site_types[site_type].title)
+      if (site_types[site_type].title) {
+        labelEl.appendChild(document.createElement('hr'));
         labelEl.appendChild(document.createTextNode(site_types[site_type].title));
+        if (site_type !== 'updated' && Object.keys(site_types[site_type].sites).length)
+          labelEl.appendChild(document.createTextNode(' - #' + Object.keys(site_types[site_type].sites).length));
+      }
       sitesEl.appendChild(labelEl);
       let sites_arr = site_types[site_type].sites;
       for (let key in sites_arr) {
@@ -152,6 +159,12 @@ function handleSearch() {
       else
         item.style.display = 'none';
     }
+    var nofix = document.getElementById('nofix');
+    if (nofix_sites.includes(search)) {
+      nofix.innerText = 'No (proper) fix for domain ' + search + ', but it may still be part of (imported) custom sites.';
+      nofix.style.margin = '10px';
+    } else
+      nofix.innerText = '';
   });
 
   let selectButtons = document.querySelectorAll('#select-all, #select-none');

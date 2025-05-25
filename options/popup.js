@@ -1,13 +1,35 @@
 var ext_api = (typeof browser === 'object') ? browser : chrome;
 var url_loc = (typeof browser === 'object') ? 'firefox' : 'chrome';
 var manifestData = ext_api.runtime.getManifest();
-var navigator_ua = navigator.userAgent;
-var navigator_ua_mobile = navigator_ua.toLowerCase().includes('mobile');
-var yandex_browser = navigator_ua_mobile && (url_loc === 'chrome') && navigator_ua.toLowerCase().includes('yabrowser');
-var custom_switch = ((manifestData.optional_permissions && manifestData.optional_permissions.length) || (manifestData.optional_host_permissions && manifestData.optional_host_permissions.length)) && !(navigator_ua_mobile && (url_loc === 'chrome') && !yandex_browser);
+var ext_manifest_version = manifestData.manifest_version;
+var custom_switch = ((manifestData.optional_permissions && manifestData.optional_permissions.length) || (manifestData.optional_host_permissions && manifestData.optional_host_permissions.length));
+
+// htmlviewer: clean layout
+ext_api.tabs.query({
+  active: true,
+  currentWindow: true
+}, function (tabs) {
+  if (tabs && tabs[0] && ((tabs[0].url === 'about:blank' && tabs[0].title !== 'about:blank') || tabs[0].url === 'https://codebeautify.org/htmlviewer')) {
+    let tabId = tabs[0].id;
+    if (ext_manifest_version === 2) {
+      ext_api.tabs.executeScript(tabId, {
+        file: '/options/htmlviewer.js'
+      }, function (res) {
+        if (ext_api.runtime.lastError || res[0]) {
+          return;
+        }
+      });
+    } else if (ext_manifest_version === 3) {
+      ext_api.scripting.executeScript({
+        target: {tabId: tabId},
+        files: ["/options/htmlviewer.js"]
+      })
+    }
+  }
+});
 
 function popup_show_toggle(domain, enabled) {
-  if (domain && !matchDomain(['webcache.googleusercontent.com'], domain)) {
+  if (domain) {
     var site_switch_span = document.getElementById('site_switch_span');
     let labelEl = document.createElement('label');
     labelEl.setAttribute('class', 'switch');
@@ -82,14 +104,11 @@ function showArchiveLinks() {
     if (tabs && tabs[0] && /^http/.test(tabs[0].url)) {
       let url = tabs[0].url;
       let hostname = urlHost(url);
-      if (!matchDomain(['hbrchina.org'], hostname))
-        url = url.split(/[#\?]/)[0];
       let url_enc = encodeURIComponent(url);
       let archive_array = {
         'Archive.today': 'https://archive.today?run=1&url=' + url_enc,
-        'Google webcache': 'https://webcache.googleusercontent.com/search?q=cache:' + url_enc,
-        'Clearthis.page': 'https://clearthis.page?u=' + url,
-        'Google Search Tool\n(use online html-viewer - no fix)': 'https://search.google.com/test/rich-results?url=' + url_enc
+        'Clearthis.page': 'https://clearthis.page?u=' + url_enc,
+        'Google Search Tool\n(see help - troubleshooting)': 'https://search.google.com/test/rich-results?url=' + url_enc
       };
       let archive_id = document.querySelector('span#archive');
       if (archive_id) {
@@ -98,7 +117,7 @@ function showArchiveLinks() {
           let elem_div = document.createElement('div');
           let elem = document.createElement('a');
           elem.innerText = key;
-          if (!(matchDomain(['1ft.io', 'clearthis.page', 'google.com', 'googleusercontent.com'], hostname) || hostname.match(/^archive\.\w{2}$/))) {
+          if (!(matchDomain(['clearthis.page', 'google.com'], hostname) || hostname.match(/^archive\.\w{2}$/))) {
             elem.href = archive_array[key];
             elem.title = elem.href;
             elem.target = '_blank';
